@@ -9,6 +9,7 @@ import Footer from '../components/Footer'
 import '../static/style/pages/detailed.css'
 // import MarkNav from 'markdown-navbar';
 import 'markdown-navbar/dist/navbar.css';
+import servicePath from '../config/apiUrl'
 import axios from 'axios'
 import marked from 'marked'
 import hljs from 'highlightjs';
@@ -145,7 +146,7 @@ Detailed.getInitialProps = async(context)=>{
   console.log(context.query.id)
   let id =context.query.id
   const promise = new Promise((resolve)=>{
-    axios('http://127.0.0.1:7001/default/getArticleById/'+id).then(
+    axios(servicePath.getArticleById+id).then(
       (res)=>{
         // console.log(title)
         resolve(res.data.data[0])
