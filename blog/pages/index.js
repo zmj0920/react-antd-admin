@@ -18,15 +18,13 @@ const Home = (res) => {
   //const [mylist, setMylist] = useState(list.data);
 
   const [mylist, setMylist] = useState(res.list);
-  const [type, setType] = useState(res.type);
-
   //---------主要代码-------------end
   return (
     <>
       <Head>
         <title>Home</title>
       </Head>
-      <Header type={type} />
+      <Header  />
       <Row className="comm-main" type="flex" justify="center">
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}  >
           <div>
