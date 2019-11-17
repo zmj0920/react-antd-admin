@@ -1,4 +1,8 @@
 .header{
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+    top: 0;
     background-color: #fff ;
     padding: .4rem;
     overflow: hidden;
