@@ -1,8 +1,8 @@
 import '../static/style/components/footer.css'
 const Footer = ()=>(
     <div className="footer-div">
-        <div>系统由 React+Node+Ant Desgin驱动 </div>
-        <div>JSPang.com</div>
+        <div>技术菜博客 </div>
+        <div>jscai.521em.cn</div>
     </div>
 )
 

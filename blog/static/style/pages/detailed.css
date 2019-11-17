@@ -84,6 +84,7 @@ iframe{
     font-size: 12px !important;
 }
 .ant-anchor-wrapper{
+    max-height: 82vh !important;
     padding: 5px !important;
 }
 

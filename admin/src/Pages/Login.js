@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useHistory,useRouter } from 'react';
 import { Button, Card, Icon, Spin, Input } from 'antd'
+// import {BrowserRouter} from 'react-router-dom'
+
 import '../static/css/Login.css';
 const Login = () => {
     const [userName, setUserName] = useState('')
@@ -9,6 +11,7 @@ const Login = () => {
         setIsLoading(true)
         setTimeout(() => {
             setIsLoading(false)
+        
         }, 1000)
     }
 
