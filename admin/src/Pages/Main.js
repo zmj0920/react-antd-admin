@@ -6,7 +6,7 @@ function Main() {
     return (
         <Router>
           <Route path="/" exact component={Login}/>
-          <Route path="/layout" exact component={BaseLayout}/>
+          <Route path="/index" exact component={BaseLayout}/>
         </Router>
     )
 }
