@@ -43,14 +43,13 @@ module.exports = appInfo => {
   };
 
   config.security = {
-    csrf: {
-      enable: false
-    },
-    domainWhiteList: ['*']
+    csrf: { enable: false },
+    domainWhiteList: [ '*' ],
   };
   config.cors = {
-    origin: '*',
-    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+    origin: 'http://localhost:3000',
+    credentials: true, // 允许Cook可以跨域
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
   // config.cors = {
   //   origin: 'http://localhost:3000', //只允许这个域进行访问接口
