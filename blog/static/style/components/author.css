@@ -16,3 +16,16 @@
     margin-left: .5rem;
     margin-right: .5rem;
 }
+
+.author-div div {
+    margin-bottom: 1rem;
+}
+
+.author-tag {
+    line-height: 27px;
+}
+
+.author-name {
+    font-size: 1rem;
+    color: #1890ff;
+}
