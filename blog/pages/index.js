@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Row, Col, List, Icon } from 'antd'
+import { Row, Col, List, Icon, BackTop, Affix } from 'antd'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import '../static/style/pages/index.css'
@@ -24,7 +24,7 @@ const Home = (res) => {
       <Head>
         <title>Home</title>
       </Head>
-      <Header  />
+      <Header />
       <Row className="comm-main" type="flex" justify="center">
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={15}  >
           <div>
@@ -55,8 +55,11 @@ const Home = (res) => {
 
         <Col className="comm-right" xs={0} sm={0} md={8} lg={6} xl={5}>
           <Author />
-          <Advert />
+          <Affix offsetTop={40} >
+            <Advert />
+          </Affix>
         </Col>
+        <BackTop />
       </Row>
       <Footer />
 
