@@ -55,7 +55,7 @@ const Home = (res) => {
 
         <Col className="comm-right" xs={0} sm={0} md={8} lg={6} xl={5}>
           <Author />
-          <Affix offsetTop={40} >
+          <Affix offsetTop={60} >
             <Advert />
           </Affix>
         </Col>
