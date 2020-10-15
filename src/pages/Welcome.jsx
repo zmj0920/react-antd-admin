@@ -1,12 +1,12 @@
 import React, { Component, createRef } from 'react';
-import { connect,history } from 'umi';
+import { connect, history } from 'umi';
 import { PageContainer } from '@ant-design/pro-layout';
 import styles from './Welcome.less';
 import { Card, Alert, Typography, Form, Input, Icon, Button, message } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import AddFormBase from '../customComponents/AddForm'
 
-@connect(({ user,global, loading }) => ({
+@connect(({ user, global, loading }) => ({
   global,
   user,
   loading: loading.models.user,
@@ -25,9 +25,6 @@ class Welcome extends AddFormBase {
     };
   }
 
-  componentDidMount() {
-   
-  }
 
   getApiData = props => {
     const {
@@ -39,23 +36,33 @@ class Welcome extends AddFormBase {
 
   afterSubmitSuccess = (singleData, listData, extra, responseOriginalData, submitData) => {
     console.log(listData)
-   };
+  };
+
+
+  checkSubmitRequestParams = o => {
+    const { age } = o;
+    if (age > 10) {
+      message.warn('少年');
+      return false
+    }
+    return true;
+  };
 
 
   testData = () => {
     const { dispatch } = this.props
-  
+
     dispatch({
       type: 'user/testData',
       payload: {
-       
+
       },
     }).then(() => {
-      
-       const data = this.getApiData(this.props);
-     
-       console.log(this.props)
-     
+
+      const data = this.getApiData(this.props);
+
+      console.log(this.props)
+
       //  history.push(`/`);
       //  history.push({
       //   pathname: '/test',
@@ -98,6 +105,12 @@ class Welcome extends AddFormBase {
   //     });
   // }
 
+
+  onTest = () => {
+    this.formRef.current.validateFields().then(values => {
+      console.log(values)
+    })
+  }
 
   formContent = () => {
 
