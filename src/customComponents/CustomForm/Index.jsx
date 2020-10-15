@@ -134,7 +134,7 @@ class Index extends PureComponent {
                 onChangeCallback(e);
             }
         }
-        console.log(listData)
+       
         return (
             <Form.Item name={name} {...(formItemLayout || {})} label={title} extra={helper}>
                 <Radio.Group {...otherRadioProps} defaultValue={value}>

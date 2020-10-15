@@ -20,7 +20,7 @@ class Welcome extends AddFormBase {
       ...{
         dataLoading: false,
         pageName: '添加信息',
-        submitApiPath: 'weChatMiniProgramLive/createLiveRoom',
+        submitApiPath: 'user/testData',
       },
     };
   }
@@ -37,6 +37,11 @@ class Welcome extends AddFormBase {
     return data;
   };
 
+  afterSubmitSuccess = (singleData, listData, extra, responseOriginalData, submitData) => {
+    console.log(listData)
+   };
+
+
   testData = () => {
     const { dispatch } = this.props
   
@@ -52,12 +57,12 @@ class Welcome extends AddFormBase {
        console.log(this.props)
      
       //  history.push(`/`);
-       history.push({
-        pathname: '/test',
-        query: {
-          a: 'b',
-        },
-      });
+      //  history.push({
+      //   pathname: '/test',
+      //   query: {
+      //     a: 'b',
+      //   },
+      // });
     });
   }
 
@@ -114,7 +119,7 @@ class Welcome extends AddFormBase {
             { name: "女", flag: 1 }
             ])
         }
-        <Button onClick={this.testData}>
+        <Button onClick={this.validate}>
           提交
            </Button>
       </>

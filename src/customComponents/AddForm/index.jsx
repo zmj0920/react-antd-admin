@@ -1,7 +1,7 @@
 import React, { Component,createRef } from 'react';
-import { connect } from 'umi';
 import { BackTop, Avatar, message, Form } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import {pretreatmentRequestParams} from '../../utils/addfrom'
 import CustomForm from '../CustomForm'
 import styles from './index.less';
 

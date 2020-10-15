@@ -1,57 +1,17 @@
 # Ant Design Pro
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
 
-## Environment Prepare
+#### 前言
+以下文章纯属个人理解，便于记录学习，肯定有理解错误或理解不到位的地方，
+意在站在前辈的肩膀，分享个人对技术的通俗理解，共同成长！
 
-Install `node_modules`:
 
-```bash
-npm install
+
+> Author:君吟
+> Email: 506499594@qq.com  
+> github: https://github.com/zmj0920/
+
+#### 运行
 ```
-
-or
-
-```bash
-yarn
+npm run start
 ```
-
-## Provided Scripts
-
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
-
-Scripts provided in `package.json`. It's safe to modify or add additional script:
-
-### Start project
-
-```bash
-npm start
-```
-
-### Build project
-
-```bash
-npm run build
-```
-
-### Check code style
-
-```bash
-npm run lint
-```
-
-You can also use script to auto fix some lint error:
-
-```bash
-npm run lint:fix
-```
-
-### Test code
-
-```bash
-npm test
-```
-
-## More
-
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
