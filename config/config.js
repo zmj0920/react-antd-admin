@@ -2,10 +2,11 @@
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
-import pageRoutes from './router.config'
+import pageRoutes from './router.config';
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
-  hash: false,
+  // hash: false,
+  history: { type: 'hash' },
   antd: {},
   dva: {
     hmr: true,
@@ -24,7 +25,7 @@ export default defineConfig({
     ie: 11,
   },
   // umi routes: https://umijs.org/docs/routing
-  routes:pageRoutes,
+  routes: pageRoutes,
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     // ...darkTheme,
