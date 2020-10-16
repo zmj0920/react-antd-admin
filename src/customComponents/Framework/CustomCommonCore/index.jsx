@@ -63,7 +63,7 @@ class Index extends CustomCore {
    *
    * @memberof Index
    */
-  initOther = () => {};
+  initOther = () => { };
 
   init = () => {
     this.initLoad();
@@ -71,22 +71,22 @@ class Index extends CustomCore {
   };
 
   // eslint-disable-next-line no-unused-vars
-  beforeFirstLoadRequest = submitData => {};
+  beforeFirstLoadRequest = submitData => { };
 
   // eslint-disable-next-line no-unused-vars
-  beforeReLoadRequest = submitData => {};
+  beforeReLoadRequest = submitData => { };
 
   // eslint-disable-next-line no-unused-vars
-  beforeRequest = submitData => {};
+  beforeRequest = submitData => { };
 
   // eslint-disable-next-line no-unused-vars
-  afterGetFirstRequestResult = (submitData, responseData) => {};
+  afterGetFirstRequestResult = (submitData, responseData) => { };
 
   // eslint-disable-next-line no-unused-vars
-  afterGetRequestResult = (submitData, responseData) => {};
+  afterGetRequestResult = (submitData, responseData) => { };
 
   // eslint-disable-next-line no-unused-vars
-  afterGetReLoadRequestResult = (submitData, responseData) => {};
+  afterGetReLoadRequestResult = (submitData, responseData) => { };
 
   getRequestingData() {
     return this.lastRequestingData;
@@ -322,12 +322,12 @@ class Index extends CustomCore {
     });
   };
 
-  afterFirstLoadSuccess = () => {};
+  afterFirstLoadSuccess = () => { };
 
   // eslint-disable-next-line no-unused-vars
-  afterLoadSuccess = (metaData, metaListData, metaExtra, metaOriginalData) => {};
+  afterLoadSuccess = (metaData, metaListData, metaExtra, metaOriginalData) => { };
 
-  afterReloadSuccess = () => {};
+  afterReloadSuccess = () => { };
 
   backToList = () => {
     const { backPath } = this.state;
@@ -445,8 +445,6 @@ class Index extends CustomCore {
     canOperate = true,
     formItemLayout = {},
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
 
     const title = label;
 
@@ -467,8 +465,8 @@ class Index extends CustomCore {
     }
 
     return (
-      <FormItem {...formItemLayout} label={title} extra={helper}>
-        {getFieldDecorator(name)(<Input {...otherInputProps} />)}
+      <FormItem {...formItemLayout} label={title} extra={helper} name={name}>
+        <Input {...otherInputProps} />
       </FormItem>
     );
   };
@@ -488,8 +486,6 @@ class Index extends CustomCore {
     selectShow = false,
     onChangeCallback
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
     const title = label;
 
     const otherInputProps = {
@@ -497,9 +493,9 @@ class Index extends CustomCore {
         addonBefore: <Icon type={iconType} />,
         placeholder: selectShow ? '选择商家后显示' : buildFieldDescription(title, reminderPrefix),
         disabled,
-        onChange:(v,option)=>{
-          if(isFunction(onChangeCallback)){
-            onChangeCallback(v,option);
+        onChange: (v, option) => {
+          if (isFunction(onChangeCallback)) {
+            onChangeCallback(v, option);
           }
         }
       },
@@ -514,18 +510,18 @@ class Index extends CustomCore {
       );
     }
     return (
-      <FormItem {...formItemLayout} label={title} extra={helper}>
-        {getFieldDecorator(
-          name,
-          refitFieldDecoratorOption(value, value, value, {
-            rules: [
-              {
-                required,
-                message: buildFieldDescription(title),
-              },
-            ]
-          }),
-        )(<Input {...otherInputProps} />)}
+      <FormItem {...formItemLayout}
+        label={title}
+        extra={helper}
+        name={name}
+        rules={[
+          {
+            required,
+            message: buildFieldDescription(title),
+          },
+        ]}
+      >
+        <Input {...otherInputProps} />
       </FormItem>
     );
   };
@@ -541,8 +537,8 @@ class Index extends CustomCore {
     canOperate = true,
     formItemLayout = {},
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+
+
 
     const title = label;
 
@@ -563,18 +559,18 @@ class Index extends CustomCore {
     }
 
     return (
-      <FormItem {...formItemLayout} label={title} extra={helper}>
-        {getFieldDecorator(
-          name,
-          refitFieldDecoratorOption(value, value, value, {
-            rules: [
-              {
-                required,
-                message: buildFieldDescription(title),
-              },
-            ],
-          }),
-        )(<Password {...otherInputProps} />)}
+      <FormItem {...formItemLayout}
+        label={title}
+        extra={helper}
+        name={name}
+        rules={[
+          {
+            required,
+            message: buildFieldDescription(title),
+          },
+        ]}
+      >
+        <Password {...otherInputProps} />
       </FormItem>
     );
   };
@@ -610,8 +606,7 @@ class Index extends CustomCore {
     canOperate = true,
     formItemLayout = {},
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+
 
     const title = label;
 
@@ -633,18 +628,17 @@ class Index extends CustomCore {
     }
 
     return (
-      <FormItem {...formItemLayout} label={title} extra={helper}>
-        {getFieldDecorator(
-          name,
-          refitFieldDecoratorOption(value, value, null, {
-            rules: [
-              {
-                required,
-                message: buildFieldDescription(title),
-              },
-            ],
-          }),
-        )(<InputNumber {...otherInputNumberProps} />)}
+      <FormItem {...formItemLayout} label={title} extra={helper}
+        name={name}
+        rules={[
+          {
+            required,
+            message: buildFieldDescription(title),
+          },
+        ]}
+
+      >
+        <InputNumber {...otherInputNumberProps} />
       </FormItem>
     );
   };
@@ -659,8 +653,7 @@ class Index extends CustomCore {
     canOperate = true,
     formItemLayout = {},
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+
 
     const title = label;
 
@@ -680,18 +673,16 @@ class Index extends CustomCore {
     }
 
     return (
-      <FormItem {...formItemLayout} label={title} extra={helper}>
-        {getFieldDecorator(
-          name,
-          refitFieldDecoratorOption(value, value, value, {
-            rules: [
-              {
-                required,
-                message: buildFieldDescription(title),
-              },
-            ],
-          }),
-        )(<TextArea {...otherTextAreaProps} />)}
+      <FormItem {...formItemLayout} label={title} extra={helper}
+      name={name}
+        rules={[
+          {
+            required,
+            message: buildFieldDescription(title),
+          },
+        ]}
+      >
+        <TextArea {...otherTextAreaProps} />
       </FormItem>
     );
   };
@@ -706,8 +697,7 @@ class Index extends CustomCore {
     canOperate = true,
     formItemLayout = {},
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+
 
     const title = label;
 
@@ -731,24 +721,16 @@ class Index extends CustomCore {
     }
 
     return (
-      <FormItem {...formItemLayout} label={title} extra={helper}>
-        {getFieldDecorator(
-          name,
-          refitFieldDecoratorOption(
-            value,
-            value,
-            null,
-            {
-              rules: [
-                {
-                  required,
-                  message: buildFieldDescription(title),
-                },
-              ],
-            },
-            v => stringToMoment(v),
-          ),
-        )(<DatePicker {...otherDatePickerProps} />)}
+      <FormItem {...formItemLayout} label={title} extra={helper}
+      name={name}
+        rules={[
+          {
+            required,
+            message: buildFieldDescription(title),
+          },
+        ]}
+      >
+        <DatePicker {...otherDatePickerProps} />
       </FormItem>
     );
   };
@@ -764,8 +746,7 @@ class Index extends CustomCore {
     required = false,
     otherProps = null,
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+
 
     const otherSelectProps = {
       ...{
@@ -781,22 +762,18 @@ class Index extends CustomCore {
     };
 
     return (
-      <FormItem {...(formItemLayout || {})} label={label} extra={helper}>
-        {getFieldDecorator(
-          name,
-          refitFieldDecoratorOption(value, value, 0, {
-            rules: [
-              {
-                required,
-                message: buildFieldDescription(label, '选择'),
-              },
-            ],
-          }),
-        )(
-          <Select {...otherSelectProps}>
+      <FormItem {...(formItemLayout || {})} label={label} extra={helper}
+      name={name}
+        rules={[
+          {
+            required,
+            message: buildFieldDescription(title),
+          },
+        ]}>
+       <Select {...otherSelectProps}>
             {isFunction(renderOptionFunction) ? renderOptionFunction() : null}
           </Select>,
-        )}
+        
       </FormItem>
     );
   };
@@ -812,8 +789,7 @@ class Index extends CustomCore {
     required = false,
     otherProps = null,
   ) => {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
+
 
     const otherRadioProps = {
       ...{
@@ -829,22 +805,20 @@ class Index extends CustomCore {
     };
 
     return (
-      <FormItem {...(formItemLayout || {})} label={label} extra={helper}>
-        {getFieldDecorator(
-          name,
-          refitFieldDecoratorOption(value, value, 0, {
-            rules: [
-              {
-                required,
-                message: buildFieldDescription(label, '选择'),
-              },
-            ],
-          }),
-        )(
+      <FormItem {...(formItemLayout || {})} label={label} extra={helper}
+      name={name}
+        rules={[
+          {
+            required,
+            message: buildFieldDescription(title),
+          },
+        ]}
+      >
+        
           <RadioGroup {...otherRadioProps}>
             {isFunction(renderOptionFunction) ? renderOptionFunction() : null}
           </RadioGroup>,
-        )}
+        
       </FormItem>
     );
   };

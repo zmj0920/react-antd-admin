@@ -149,7 +149,7 @@ class ModalBase extends CustomAuthorization {
         onCancel={this.handleCancel}
       >
         <Spin spinning={processing || dataLoading}>
-          <Form>{this.formContent()}</Form>
+          <Form ref={this.formRef}>{this.formContent()}</Form>
         </Spin>
       </Modal>
     );

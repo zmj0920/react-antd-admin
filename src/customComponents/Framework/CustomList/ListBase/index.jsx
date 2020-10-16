@@ -1,6 +1,8 @@
-import React from 'react';
+import React ,{createRef}from 'react';
 import { Row, Col, Card, Form, Button, DatePicker, BackTop, Divider } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+
+import { SearchOutlined, ReloadOutlined, } from '@ant-design/icons';
 
 import { defaultListState, buildFieldDescription } from '../../../../utils/tools';
 import CustomAuthorization from '../../CustomAuthorization';
@@ -11,6 +13,7 @@ const FormItem = Form.Item;
 const { RangePicker } = DatePicker;
 
 class SingleList extends CustomAuthorization {
+  formRef = createRef();
   constructor(props) {
     super(props);
 
@@ -59,18 +62,24 @@ class SingleList extends CustomAuthorization {
       return;
     }
 
-    const { form } = this.props;
+    const {
+      current: { validateFields },
+  } = this.formRef
 
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
 
-      const values = {
-        ...fieldsValue,
-        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
-      };
+  validateFields().then(fieldsValue => {
+    const values = {
+      ...fieldsValue,
+      updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+    };
 
-      this.searchData({ formValues: values });
-    });
+    this.searchData({ formValues: values });
+  })
+    // form.validateFields((err, fieldsValue) => {
+    //   if (err) return;
+
+      
+    // });
   };
 
   renderSimpleFormButton = (expandButton, ColMd = 6) => {
@@ -80,14 +89,17 @@ class SingleList extends CustomAuthorization {
       <Col md={ColMd} sm={24}>
         <span className={styles.submitButtons}>
           <Button loading={searching} type="primary" 
-          // icon="search"
-           htmlType="submit">
+           icon={<SearchOutlined />}
+           onClick={(e) => {
+            this.handleSearch(e);
+          }}
+           >
             查询
           </Button>
           <Button
             loading={reloading}
             style={{ marginLeft: 8 }}
-            // icon="reload"
+             icon={<ReloadOutlined />}
             onClick={() => {
               this.handleFormReset();
             }}
@@ -98,7 +110,7 @@ class SingleList extends CustomAuthorization {
           <Button
             loading={refreshing}
             className={styles.searchButtonMarginLeft}
-            // icon="reload"
+            icon={<ReloadOutlined />}
             onClick={() => {
               if (!this.checkWorkDoing()) {
                 this.refreshData();
@@ -161,7 +173,7 @@ class SingleList extends CustomAuthorization {
   };
 
   renderSimpleForm = () => (
-    <Form onSubmit={this.handleSearch} layout="inline">
+    <Form ref={this.formRef} onSubmit={this.handleSearch} layout="inline">
       {this.renderSimpleFormRow()}
     </Form>
   );

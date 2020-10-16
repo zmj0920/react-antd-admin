@@ -1,8 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { connect, history } from 'umi';
-import { PageContainer } from '@ant-design/pro-layout';
-import styles from './Welcome.less';
-import { Card, Alert, Typography, Form, Input, Icon, Button, message } from 'antd';
+import { Row, Col, Typography, Form, Input, Icon, Button, message } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import PagerList from '@/customComponents/Framework/CustomList/PagerList';
 @connect(({ user, global, loading }) => ({
@@ -36,6 +34,29 @@ class Welcome extends PagerList {
     return data;
   };
 
+  renderSimpleFormRow = () => {
+    const { dataLoading, processing } = this.state;
+
+    return (
+      <>
+        <Row gutter={{ md: 8, lg: 24, xl: 48 }} justify="end">
+          <Col md={15} sm={24}>
+          { this.renderFormInputFormItem("姓名", "name", "", true, null, <SettingOutlined />)}
+          </Col>
+          {this.renderSimpleFormButton()}
+        </Row>
+      </>
+    );
+  };
+  getColumn = () => [
+    {
+      title: "id",
+      dataIndex: 'id',
+      width: 100,
+      align: 'center',
+    }
+  ];
+
   formContent = () => {
 
     return (
@@ -62,16 +83,6 @@ class Welcome extends PagerList {
       </>
     )
   }
-
-  getColumn = () => [
-    {
-      title: "id",
-      dataIndex: 'id',
-      width: 100,
-      align: 'center',
-    }
-  ];
-
   
 }
 

@@ -160,7 +160,7 @@ class SingleList extends CustomAuthorization {
   };
 
   renderSimpleForm = () => (
-    <Form onSubmit={this.handleSearch} layout="inline">
+    <Form ref={this.formRef} onSubmit={this.handleSearch} layout="inline">
       {this.renderSimpleFormRow()}
     </Form>
   );
