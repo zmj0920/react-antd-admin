@@ -159,8 +159,16 @@ export default {
 
   'POST /api/test': (req, res) => {
     res.send({
-      status: 'ok',
-      data: [{
+      code: 200,
+      success: true,
+      message: "",
+      extra: {
+        pageNo: 1,
+        pageSize: 10,
+        total: 20
+      },
+      list: [
+        {
           id: '000000001',
           avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
           title: '你收到了 14 份新周报',
@@ -253,6 +261,71 @@ export default {
           description: '冠霖提交于 2017-01-06，需在 2017-01-07 前完成代码变更任务',
           extra: '进行中',
           status: 'processing',
+          type: 'event',
+        },
+        {
+          id: '000000013',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png',
+          title: '这种模板可以区分多种通知类型',
+          datetime: '2017-08-07',
+          read: true,
+          type: 'notification',
+        },
+        {
+          id: '000000014',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png',
+          title: '左侧图标用于区分不同的类型',
+          datetime: '2017-08-07',
+          type: 'notification',
+        },
+        {
+          id: '000000015',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png',
+          title: '内容不要超过两行字，超出时自动截断',
+          datetime: '2017-08-07',
+          type: 'notification',
+        },
+        {
+          id: '000000016',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
+          title: '曲丽丽 评论了你',
+          description: '描述信息描述信息描述信息',
+          datetime: '2017-08-07',
+          type: 'message',
+          clickClose: true,
+        },
+        {
+          id: '000000017',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
+          title: '朱偏右 回复了你',
+          description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
+          datetime: '2017-08-07',
+          type: 'message',
+          clickClose: true,
+        },
+        {
+          id: '000000018',
+          avatar: 'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg',
+          title: '标题',
+          description: '这种模板用于提醒谁与你发生了互动，左侧放『谁』的头像',
+          datetime: '2017-08-07',
+          type: 'message',
+          clickClose: true,
+        },
+        {
+          id: '000000019',
+          title: '任务名称',
+          description: '任务需要在 2017-01-12 20:00 前启动',
+          extra: '未开始',
+          status: 'todo',
+          type: 'event',
+        },
+        {
+          id: '000000020',
+          title: '任务名称',
+          description: '任务需要在 2017-01-12 20:00 前启动',
+          extra: '未开始',
+          status: 'todo',
           type: 'event',
         },
       ]

@@ -1,9 +1,10 @@
 // import router from 'umi/router';
-import { message } from 'antd';
+import {
+  message
+} from 'antd';
 import moment from 'moment';
 import uuidv4 from 'uuid/v4';
 import copy from 'copy-to-clipboard';
-import queue from 'queue';
 import numeral from 'numeral';
 import {
   isEqual as isEqualLodash,
@@ -22,7 +23,9 @@ import {
   remove as removeLodash,
 } from 'lodash';
 
-// import { getConfigData } from '../customConfig/config';
+import {
+  getConfigData
+} from '../customConfig/config';
 
 // import { logLevel } from './constants';
 
@@ -51,7 +54,12 @@ export function defaultBaseState() {
 }
 
 export function defaultCoreState() {
-  const data = { ...defaultBaseState(), ...{ dataLoading: true } };
+  const data = {
+    ...defaultBaseState(),
+    ...{
+      dataLoading: true
+    }
+  };
 
   return data;
 }
@@ -78,7 +86,9 @@ export function defaultListState() {
     ...{
       loadDataAfterMount: true,
       dateRangeFieldName: '发生时间',
-      tableScroll: { x: 1520 },
+      tableScroll: {
+        x: 1520
+      },
       formValues: {},
       startTimeAlias: '',
       endTimeAlias: '',
@@ -100,7 +110,9 @@ export function defaultPageListState() {
       paramsKey: '',
       loadApiPath: '',
       dateRangeFieldName: '发生时间',
-      tableScroll: { x: 1520 },
+      tableScroll: {
+        x: 1520
+      },
       formValues: {},
       pageNo: 1,
       pageSize: 10,
@@ -117,7 +129,11 @@ export function defaultPageListState() {
 export function defaultFormState() {
   const data = {
     ...defaultCommonState(),
-    ...{ loadDataAfterMount: true, errorFieldName: '', submitApiPath: '' },
+    ...{
+      loadDataAfterMount: true,
+      errorFieldName: '',
+      submitApiPath: ''
+    },
   };
 
   return data;
@@ -209,13 +225,18 @@ export function dingIdTarget() {
  */
 export function recordLog(record, level = logLevel.debug) {
   if (logShowInConsole()) {
-  
-    console.log({ level, record });
+
+    console.log({
+      level,
+      record
+    });
   }
 }
 
 function logShowInConsole() {
-  const { NODE_ENV } = process.env;
+  const {
+    NODE_ENV
+  } = process.env;
 
   if (NODE_ENV === 'development') {
     return true;
@@ -254,7 +275,7 @@ export function toDatetime(v) {
   const i = v.indexOf('T');
 
   if (i < 0) {
-   
+
     const value = v.replace(/\-/g, '/');
     const result = new Date(value);
 
@@ -272,9 +293,9 @@ export function toDatetime(v) {
  * @returns
  */
 export function formatDatetime(v, formatString = 'YYYY-MM-DD', defaultValue = '') {
-  return (v || '') === ''
-    ? defaultValue
-    : moment(typeof v === 'object' ? v : new Date(v.replace('/', '-'))).format(formatString);
+  return (v || '') === '' ?
+    defaultValue :
+    moment(typeof v === 'object' ? v : new Date(v.replace('/', '-'))).format(formatString);
 }
 
 export function numeralFormat(v, formatString) {
@@ -464,12 +485,12 @@ export function formatMoney(
     negative +
     (j ? i.substr(0, j) + thousand : '') +
     i.substr(j).replace(/(\d{3})(?=\d)/g, `${symbolSource}1${thousand}`) +
-    (places
-      ? decimal +
-        Math.abs(number - toNumber(i))
-          .toFixed(places)
-          .slice(2)
-      : '')
+    (places ?
+      decimal +
+      Math.abs(number - toNumber(i))
+      .toFixed(places)
+      .slice(2) :
+      '')
   );
 }
 
@@ -818,7 +839,10 @@ function errorCustomData() {
 }
 
 function dataExceptionNotice(d) {
-  const { code, message: messageText } = d;
+  const {
+    code,
+    message: messageText
+  } = d;
   const c = errorCustomData();
 
   const lastCustomMessage = window.lastCustomMessage || {
@@ -892,11 +916,17 @@ export function buildFieldDescription(v, op, other) {
  * @returns
  */
 export function pretreatmentRemoteSingleData(d) {
-  const { code, message: messageText } = d || errorCustomData();
+  const {
+    code,
+    message: messageText
+  } = d || errorCustomData();
   let v = {};
 
   if (code === 200) {
-    const { data, extra } = d;
+    const {
+      data,
+      extra
+    } = d;
     v = {
       code,
       message: messageText,
@@ -927,11 +957,17 @@ export function pretreatmentRemoteSingleData(d) {
  * @returns
  */
 export function pretreatmentRemoteListData(d, listItemHandler) {
-  const { code, message: messageText } = d || errorCustomData();
+  const {
+    code,
+    message: messageText
+  } = d || errorCustomData();
   let v = {};
 
   if (code === 200) {
-    const { list: listData, extra: extraData } = d;
+    const {
+      list: listData,
+      extra: extraData
+    } = d;
     const list = (listData || []).map((item, index) => {
       let o = item;
 
@@ -977,15 +1013,22 @@ export function pretreatmentRemoteListData(d, listItemHandler) {
  * @returns
  */
 export function pretreatmentRemotePageListData(d, listItemHandler) {
-  const { code, message: messageText } = d || errorCustomData();
+  const {
+    code,
+    message: messageText
+  } = d || errorCustomData();
   let v = {};
 
   if (code === 200) {
-    const { list: listData, extra: extraData } = d;
-    const { pageNo } = extraData;
+    const {
+      list: listData,
+      extra: extraData
+    } = d;
+    const {
+      pageNo
+    } = extraData;
     const list = (listData || []).map((item, index) => {
       let o = item;
-
       if ((o.key || null) == null) {
         o.key = `${pageNo}-${index}`;
       }
@@ -1149,7 +1192,9 @@ export async function apiVirtualSuccessAccess(dataVirtual, needAuthorize = true)
 
   message.info('由虚拟访问返回');
 
-  const { code } = result;
+  const {
+    code
+  } = result;
 
   if (code === 2001) {
     router.push('/user/login');
@@ -1179,7 +1224,10 @@ export async function apiVirtualFailAccess(dataVirtual, needAuthorize = true) {
 
   message.info('由虚拟访问返回');
 
-  const { code, message: messageText } = result;
+  const {
+    code,
+    message: messageText
+  } = result;
 
   if (code === 2001) {
     router.push('/user/login');
@@ -1247,7 +1295,10 @@ export async function apiVirtualAccess(dataBuildFunction) {
 
   message.info('由虚拟访问返回');
 
-  const { code, message: messageText } = result;
+  const {
+    code,
+    message: messageText
+  } = result;
 
   if (code !== 200) {
     message.warn(messageText);
@@ -1442,31 +1493,24 @@ export function clearCustomData() {
 }
 
 /**
- * 获取工作队列
- * @export
- */
-export function getQueue() {
-  if (typeof window.queue === 'undefined') {
-    window.queueCustom = queue({ concurrency: 3 });
-    window.queueCustom.start();
-  }
-
-  return window.queueCustom;
-}
-
-/**
  * Reacts生命周期getDerivedStateFromProps 辅助函数用于将url参数解析到返回值中用于设定state，
  * @export
  */
 // eslint-disable-next-line no-unused-vars
 export function getDerivedStateFromPropsForUrlParamsCore(nextProps, prevState) {
-  const { match } = nextProps;
+  const {
+    match
+  } = nextProps;
 
   if ((match || null) != null) {
-    const { params } = match;
+    const {
+      params
+    } = match;
 
     if ((params || null) != null) {
-      return { urlParams: params };
+      return {
+        urlParams: params
+      };
     }
   }
 
@@ -1480,28 +1524,49 @@ export function getDerivedStateFromPropsForUrlParamsCore(nextProps, prevState) {
 export function getDerivedStateFromPropsForUrlParams(
   nextProps,
   prevState,
-  defaultUrlParams = { id: '' },
+  defaultUrlParams = {
+    id: ''
+  },
   parseUrlParamsForSetState = null,
 ) {
   let stateUrlParams = getDerivedStateFromPropsForUrlParamsCore(nextProps, prevState);
 
-  stateUrlParams = stateUrlParams || { urlParams: defaultUrlParams };
+  stateUrlParams = stateUrlParams || {
+    urlParams: defaultUrlParams
+  };
 
-  const { urlParams: urlParamsPrev } = prevState;
+  const {
+    urlParams: urlParamsPrev
+  } = prevState;
 
-  const { urlParams } = stateUrlParams;
+  const {
+    urlParams
+  } = stateUrlParams;
 
-  if (isEqualBySerialize({ ...(urlParamsPrev || {}), ...{} }, { ...(urlParams || {}), ...{} })) {
+  if (isEqualBySerialize({
+      ...(urlParamsPrev || {}),
+      ...{}
+    }, {
+      ...(urlParams || {}),
+      ...{}
+    })) {
     return prevState;
   }
 
   if (isFunction(parseUrlParamsForSetState)) {
     const data = parseUrlParamsForSetState(stateUrlParams);
 
-    return { ...prevState, ...stateUrlParams, ...data };
+    return {
+      ...prevState,
+      ...stateUrlParams,
+      ...data
+    };
   }
 
-  return { ...prevState, ...stateUrlParams };
+  return {
+    ...prevState,
+    ...stateUrlParams
+  };
 }
 
 /**
@@ -1855,7 +1920,10 @@ export function getTimeDistance(type) {
 }
 
 export function handleCommonDataAssist(state, action, callback = null) {
-  const { payload: d, alias } = action;
+  const {
+    payload: d,
+    alias
+  } = action;
 
   let v = pretreatmentRemoteSingleData(d);
 
@@ -1880,7 +1948,10 @@ export function handleCommonDataAssist(state, action, callback = null) {
 }
 
 export function handleListDataAssist(state, action, pretreatment = null, callback = null) {
-  const { payload: d, alias } = action;
+  const {
+    payload: d,
+    alias
+  } = action;
 
   let v = pretreatmentRemoteListData(d, pretreatment);
 
@@ -1905,7 +1976,10 @@ export function handleListDataAssist(state, action, pretreatment = null, callbac
 }
 
 export function handlePageListDataAssist(state, action, pretreatment = null, callback = null) {
-  const { payload: d, alias } = action;
+  const {
+    payload: d,
+    alias
+  } = action;
 
   let v = pretreatmentRemotePageListData(d, pretreatment);
 
@@ -1929,10 +2003,10 @@ export function handlePageListDataAssist(state, action, pretreatment = null, cal
   };
 
 }
-export function returnStartIndex(str,start) {
+export function returnStartIndex(str, start) {
   let strStart = str.substr(str.indexOf(start) + start.length + 1);
   let end = strStart.indexOf('&');
-  return strStart.substr(0,end);
+  return strStart.substr(0, end);
 }
 
 function str2ASCII(val) {
@@ -1959,16 +2033,15 @@ export function UrlEncode(str) {
   return res;
 }
 
-export function randomPosition(){
-    return {
-        longitude: 100 + Math.random() * 20,
-        latitude: 30 + Math.random() * 20
-    }
+export function randomPosition() {
+  return {
+    longitude: 100 + Math.random() * 20,
+    latitude: 30 + Math.random() * 20
+  }
 }
 export function randomMarker(len) {
-    return Array(len).fill(true).map((e, idx) => ({
-        content: '<div></div>',
-        position: randomPosition()
-    }))
+  return Array(len).fill(true).map((e, idx) => ({
+    content: '<div></div>',
+    position: randomPosition()
+  }))
 }
-

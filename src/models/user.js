@@ -1,4 +1,10 @@
 import { queryCurrent, query as queryUsers,testData } from '@/services/user';
+import {
+  handlePageListDataAssist,
+  handleCommonDataAssist,
+} from '../utils/tools';
+
+
 const UserModel = {
   namespace: 'user',
   state: {
@@ -21,15 +27,21 @@ const UserModel = {
       });
     },
     *testData({ payload }, { call, put }) {
-      const response = yield call(testData,payload);
+      const response = yield call(testData, payload);
       yield put({
-        type: 'saveNotices',
+        type: 'handlePageListData',
         payload: response,
       });
     },
 
   },
   reducers: {
+    handlePageListData(state, action) {
+      return handlePageListDataAssist(state, action);
+    },
+    handleCommonData(state, action) {
+      return handleCommonDataAssist(state, action);
+    },
     saveCurrentUser(state, action) {
       return { ...state, currentUser: action.payload || {} };
     },

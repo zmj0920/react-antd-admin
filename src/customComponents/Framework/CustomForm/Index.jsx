@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 import { Form, Input, InputNumber, Radio } from 'antd';
-import { buildFieldDescription, isFunction, formatDatetime, buildFieldHelper } from '../../utils/fromTools'
+import { buildFieldDescription, isFunction, formatDatetime, buildFieldHelper } from '../../../utils/fromTools'
 import { isNumber } from 'lodash';
 const FormItem = Form.Item
-class Index extends PureComponent {
+import CustomCommonCore  from '@/customComponents/Framework/CustomCommonCore'
+class Index extends CustomCommonCore {
 
     constructor(props) {
         super(props)

@@ -1,21 +1,18 @@
-import React, { Component, createRef } from 'react';
-import { BackTop, Avatar, message, Form,PageHeader } from 'antd';
+import React, { createRef } from 'react';
+import { BackTop, message, Form, } from 'antd';
 import { PageHeaderWrapper, } from '@ant-design/pro-layout';
-import {UserOutlined} from '@ant-design/icons'
-import { pretreatmentRequestParams } from '../../utils/addfrom'
+import { pretreatmentRequestParams } from '@/utils/addfrom'
 import CustomForm from '../CustomForm'
 import styles from './index.less';
 
-
 class AddFormBase extends CustomForm {
     formRef = createRef();
-    constructor(props) {
-        super(props);
-    }
-
-    //重置
+    /**
+     * 重置表单
+     */
     handleFormReset = () => {
         this.formRef.current.resetFields();
+        this.reloadData();
     };
 
     /**
@@ -42,18 +39,18 @@ class AddFormBase extends CustomForm {
      */
     afterSubmitSuccess = (singleData, listData, extra, responseOriginalData, submitData) => { };
 
-   /**
-    * 自定义校验扩展函数
-    * @param {自定义校验数据扩展} o 
-    * checkSubmitRequestParams = o => {
-    * const { age } = o;
-    * if (age > 10) {
-    * message.warn('少年');
-    * return false
-    * }
-    * return true;
-    * }
-    */
+    /**
+     * 自定义校验扩展函数
+     * @param {自定义校验数据扩展} o 
+     * checkSubmitRequestParams = o => {
+     * const { age } = o;
+     * if (age > 10) {
+     * message.warn('少年');
+     * return false
+     * }
+     * return true;
+     * }
+     */
     checkSubmitRequestParams = o => true;
     /**
      * 默认添加数据表单请求函数
@@ -102,18 +99,24 @@ class AddFormBase extends CustomForm {
             });
     };
     /**
-     * 
+     * 自定义logo
      */
     pageHeaderLogo = () => null;
 
+    /**
+     * 表单内容
+     */
     formContent = () => null;
 
+    /**
+     * 扩展组件
+     */
     renderOther = () => null;
 
     render() {
         const { pageName } = this.state;
         return (
-            <PageHeaderWrapper title={pageName}  avatar={{ src:this.pageHeaderLogo()?'': 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}>
+            <PageHeaderWrapper title={pageName} avatar={{ src: this.pageHeaderLogo() ? '' : 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4' }}>
                 <div className={styles.containorBox}>
                     <Form ref={this.formRef} >
                         {this.formContent()}
