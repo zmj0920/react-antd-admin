@@ -1089,15 +1089,7 @@ export function pretreatmentRequestParams(params, customHandle) {
   return submitData;
 }
 
-/**
- * 是否使用模拟访问
- *
- * @export
- * @returns
- */
-export function useVirtualAccess() {
-  return false;
-}
+
 
 /**
  * 封装模拟的登录验证

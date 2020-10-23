@@ -1,16 +1,10 @@
-import React ,{createRef}from 'react';
+import React, { createRef } from 'react';
 import { Row, Col, Card, Form, Button, DatePicker, BackTop, Divider } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-
 import { SearchOutlined, ReloadOutlined, } from '@ant-design/icons';
-
-import { defaultListState, buildFieldDescription } from '../../../../utils/tools';
+import { defaultListState } from '@/utils/tools';
 import CustomAuthorization from '../../CustomAuthorization';
-
 import styles from './index.less';
-
-const FormItem = Form.Item;
-const { RangePicker } = DatePicker;
 
 class SingleList extends CustomAuthorization {
   formRef = createRef();
@@ -26,13 +20,6 @@ class SingleList extends CustomAuthorization {
       ...defaultState,
     };
   }
-
-  onDateRangeChange = (dates, dateStrings) => {
-    this.setState({
-      startTime: dateStrings[0],
-      endTime: dateStrings[1],
-    });
-  };
 
   handleSelectRows = rows => {
     this.setState({
@@ -53,7 +40,7 @@ class SingleList extends CustomAuthorization {
   };
 
   // 其他项重置
-  handleFormOtherReset = () => {};
+  handleFormOtherReset = () => { };
 
   handleSearch = e => {
     e.preventDefault();
@@ -64,22 +51,20 @@ class SingleList extends CustomAuthorization {
 
     const {
       current: { validateFields },
-  } = this.formRef
+    } = this.formRef
 
 
-  validateFields().then(fieldsValue => {
-    const values = {
-      ...fieldsValue,
-      updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
-    };
+    validateFields().then(fieldsValue => {
+      const values = {
+        ...fieldsValue,
+        updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
+      };
 
-    this.searchData({ formValues: values });
-  })
-    // form.validateFields((err, fieldsValue) => {
-    //   if (err) return;
-
-      
-    // });
+      this.searchData({ formValues: values });
+    })
+      .catch(err => {
+        if (err) return;
+      })
   };
 
   renderSimpleFormButton = (expandButton, ColMd = 6) => {
@@ -88,18 +73,18 @@ class SingleList extends CustomAuthorization {
     return (
       <Col md={ColMd} sm={24}>
         <span className={styles.submitButtons}>
-          <Button loading={searching} type="primary" 
-           icon={<SearchOutlined />}
-           onClick={(e) => {
-            this.handleSearch(e);
-          }}
-           >
+          <Button loading={searching} type="primary"
+            icon={<SearchOutlined />}
+            onClick={(e) => {
+              this.handleSearch(e);
+            }}
+          >
             查询
           </Button>
           <Button
             loading={reloading}
             style={{ marginLeft: 8 }}
-             icon={<ReloadOutlined />}
+            icon={<ReloadOutlined />}
             onClick={() => {
               this.handleFormReset();
             }}
@@ -125,47 +110,10 @@ class SingleList extends CustomAuthorization {
     );
   };
 
-  renderSimpleFormRangePicker = (dateRangeFieldName, ColMd = 8, rangePickerProps = null) => {
-    // const { form } = this.props;
-    // const { getFieldDecorator } = form;
-
-    const p = {
-      ...{
-        style: { width: '100%' },
-        showTime: { format: 'HH:mm' },
-        format: 'YYYY-MM-DD HH:mm',
-        placeholder: ['开始时间', '结束时间'],
-        onChange: (dates, dateStrings) => {
-          this.onDateRangeChange(dates, dateStrings);
-        },
-        ...(rangePickerProps || {}),
-      },
-    };
-
-    return (
-      <Col md={ColMd} sm={24}>
-        <FormItem label={dateRangeFieldName}  name="dateRange"  rules={[
-              {
-                required: false,
-                message: buildFieldDescription(dateRangeFieldName, '选择'),
-              },
-            ]}>
-         
-          <RangePicker {...p} />
-        </FormItem>
-      </Col>
-    );
-  };
-
-  
-
   renderSimpleFormRow = () => {
-    const { dateRangeFieldName } = this.state;
-
     return (
       <>
         <Row gutter={{ md: 8, lg: 24, xl: 48 }} justify="end">
-          {/* {this.renderSimpleFormRangePicker(dateRangeFieldName, 10)} */}
           {this.renderSimpleFormButton(null, 12)}
         </Row>
       </>
@@ -180,10 +128,9 @@ class SingleList extends CustomAuthorization {
 
   renderForm = () => this.renderSimpleForm();
 
-  // eslint-disable-next-line arrow-body-style
+
   buildTableOtherConfig = () => {
     // 可以配置额外的Table属性
-
     return {};
   };
 
@@ -196,7 +143,7 @@ class SingleList extends CustomAuthorization {
     };
   };
 
-  // eslint-disable-next-line no-unused-vars
+
   renderTable = config => null;
 
   renderAboveTable = () => null;

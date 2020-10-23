@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import { BackTop, message, Form, } from 'antd';
 import { PageHeaderWrapper, } from '@ant-design/pro-layout';
-import { pretreatmentRequestParams } from '@/utils/addfrom'
+import { pretreatmentRequestParams } from '@/utils/tools'
 import CustomForm from '../CustomForm'
 import styles from './index.less';
 

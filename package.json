@@ -48,7 +48,7 @@
     "@ant-design/icons": "^4.0.0",
     "@ant-design/pro-descriptions": "^1.0.16",
     "@ant-design/pro-layout": "^6.4.16",
-    "@ant-design/pro-table": "^2.7.2",
+    "@ant-design/pro-table": "^2.9.9",
     "@antv/data-set": "^0.11.0",
     "@types/lodash.debounce": "^4.0.6",
     "@umijs/route-utils": "^1.0.32",

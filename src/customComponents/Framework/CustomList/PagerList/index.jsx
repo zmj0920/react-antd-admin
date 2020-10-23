@@ -1,4 +1,4 @@
-import React,{createRef} from 'react';
+import React, { createRef } from 'react';
 import { message } from 'antd';
 
 import {
@@ -14,7 +14,7 @@ import StandardTableCustom from '../../../StandardTableCustom';
 
 class PagerList extends ListBase {
   lastLoadParams = null;
-  formRef = createRef();
+ 
   useParamsKey = true;
 
   constructor(props) {
@@ -37,7 +37,7 @@ class PagerList extends ListBase {
 
     const { pageSize } = this.state;
 
-    // this.formRef.current.resetFields();
+    this.formRef.current.resetFields();
 
     this.handleFormOtherReset();
 
@@ -157,7 +157,7 @@ class PagerList extends ListBase {
   };
 
   // eslint-disable-next-line no-unused-vars
-  adjustRenderLoadRequestParamsWithKey = d => {};
+  adjustRenderLoadRequestParamsWithKey = d => { };
 
   afterGetRequestResult = () => {
     const { paramsKey } = this.state;
@@ -169,23 +169,21 @@ class PagerList extends ListBase {
 
   handleSearch = e => {
     e.preventDefault();
-
     if (this.checkWorkDoing()) {
       return;
     }
-
-    const { form } = this.props;
     const { pageSize } = this.state;
-
-    form.validateFields((err, fieldsValue) => {
-      if (err) return;
-
+    const {
+      current: { validateFields },
+    } = this.formRef
+    validateFields().then((fieldsValue) => {
       const values = {
         ...fieldsValue,
         updatedAt: fieldsValue.updatedAt && fieldsValue.updatedAt.valueOf(),
       };
-
       this.searchData({ formValues: values, pageNo: 1, pageSize });
+    }).catch(err => {
+      if (err) return;
     });
   };
 

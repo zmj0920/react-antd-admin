@@ -1,28 +1,28 @@
 import React from 'react';
 import { history } from 'umi';
-import { Form, Select, Radio, Input, Icon, InputNumber, DatePicker, message } from 'antd';
+import {
+  Form,
+  Select,
+  Radio,
+  Input,
+  Icon,
+  InputNumber,
+  DatePicker,
+  message
+} from 'antd';
 
 import {
   getDerivedStateFromPropsForUrlParams,
   isEqual,
   isFunction,
   defaultCommonState,
-  formatDatetime,
-  buildFieldDescription,
-  stringToMoment,
-  refitFieldDecoratorOption,
   pretreatmentRequestParams,
-  buildFieldHelper,
   isUndefined,
   recordLog,
-} from '../../../utils/tools';
+  buildFieldDescription
+} from '@/utils/tools';
 import CustomCore from '../CustomCore';
-
-const FormItem = Form.Item;
-const { Option } = Select;
-const { TextArea, Password } = Input;
-const RadioGroup = Radio.Group;
-
+const FormItem = Form.Item
 class Index extends CustomCore {
   lastRequestingData = { type: '', payload: {} };
 
@@ -47,11 +47,10 @@ class Index extends CustomCore {
     this.init();
   };
 
-  // eslint-disable-next-line no-unused-vars
+
   checkNeedUpdate = (preProps, preState, snapshot) => false;
 
   // 该方法必须重载覆盖
-  // eslint-disable-next-line no-unused-vars
   getApiData = props => ({
     metaOriginalData: {
       dataSuccess: false,
@@ -70,22 +69,22 @@ class Index extends CustomCore {
     this.initOther();
   };
 
-  // eslint-disable-next-line no-unused-vars
+
   beforeFirstLoadRequest = submitData => { };
 
-  // eslint-disable-next-line no-unused-vars
+
   beforeReLoadRequest = submitData => { };
 
-  // eslint-disable-next-line no-unused-vars
+
   beforeRequest = submitData => { };
 
-  // eslint-disable-next-line no-unused-vars
+
   afterGetFirstRequestResult = (submitData, responseData) => { };
 
-  // eslint-disable-next-line no-unused-vars
+
   afterGetRequestResult = (submitData, responseData) => { };
 
-  // eslint-disable-next-line no-unused-vars
+
   afterGetReLoadRequestResult = (submitData, responseData) => { };
 
   getRequestingData() {
@@ -117,6 +116,7 @@ class Index extends CustomCore {
   };
 
   initLoad = (callback = null) => {
+
     const {
       loadApiPath,
       firstLoadSuccess,
@@ -130,7 +130,6 @@ class Index extends CustomCore {
       if (loadDataAfterMount) {
         if ((loadApiPath || '') === '') {
           message.error('loadApiPath需要配置');
-
           this.setState({
             dataLoading: false,
             loadSuccess: false,
@@ -161,7 +160,6 @@ class Index extends CustomCore {
           }
 
           this.beforeRequest(submitData);
-
           if (dataLoading && !loadSuccess) {
             this.initLoadCore(submitData, callback);
           } else {
@@ -188,6 +186,7 @@ class Index extends CustomCore {
   };
 
   initLoadCore = (requestData, callback) => {
+
     try {
       const { dispatch } = this.props;
       const requestingDataPre = this.getRequestingData();
@@ -296,6 +295,7 @@ class Index extends CustomCore {
   };
 
   searchData = (otherState, callback = null) => {
+
     const s = { ...(otherState || {}), ...{ searching: true } };
 
     this.setState(s, () => {
@@ -311,15 +311,15 @@ class Index extends CustomCore {
 
   reloadGlobalData = (callback = null) => {
     const { dispatch } = this.props;
-
-    dispatch({
-      type: 'global/getMetaData',
-      payload: { force: true },
-    }).then(() => {
-      if (isFunction(callback)) {
-        callback();
-      }
-    });
+    callback();
+    // dispatch({
+    //   type: 'global/getMetaData',
+    //   payload: { force: true },
+    // }).then(() => {
+    //   if (isFunction(callback)) {
+    //     callback();
+    //   }
+    // });
   };
 
   afterFirstLoadSuccess = () => { };
@@ -364,134 +364,40 @@ class Index extends CustomCore {
     return null;
   };
 
-  renderFromCreateTimeField = (
-    date = new Date(),
-    helper = buildFieldHelper('数据的添加时间'),
-    label = '添加时间',
-    formItemLayout = null,
-  ) => {
-    const value = date || new Date();
-    const title = label || '添加时间';
-
-    return (
-      <FormItem {...(formItemLayout || {})} label={title} extra={helper}>
-        <Input
-          addonBefore={<Icon type="form" />}
-          value={formatDatetime(value, 'YYYY-MM-DD HH:mm')}
-          disabled
-          placeholder={buildFieldDescription(title)}
-        />
-      </FormItem>
-    );
-  };
-
-  renderFromRadioCore = (listDataSource, adjustListDataCallback = null) => {
-    let listData = listDataSource || [];
-
-    if (isFunction(adjustListDataCallback)) {
-      listData = adjustListDataCallback(listData);
-    }
-
-    const list = [];
-
-    if (listData.length > 0) {
-      listData.forEach(item => {
-        const { name, flag } = item;
-        list.push(
-          <Radio key={flag} value={flag}>
-            {name}
-          </Radio>,
-        );
-      });
-
-      return list;
-    }
-
-    return null;
-  };
-
-  renderFormOptionCore = (listDataSource, adjustListDataCallback = null) => {
-    let listData = listDataSource || [];
-
-    if (isFunction(adjustListDataCallback)) {
-      listData = adjustListDataCallback(listData);
-    }
-
-    const list = [];
-
-    if (listData.length > 0) {
-      listData.forEach(item => {
-        const { name, flag, disabled } = item;
-        list.push(
-          <Option key={`${flag}_${name}`} value={flag} disabled={disabled || false}>
-            {name}
-          </Option>,
-        );
-      });
-
-      return list;
-    }
-
-    return null;
-  };
-
-  renderSearchInputFormItem = (
-    label,
-    name,
-    value = '',
-    helper = null,
-    iconType = 'form',
-    inputProps = {},
-    canOperate = true,
-    formItemLayout = {},
-  ) => {
-
-    const title = label;
-
-    const otherInputProps = {
-      ...{
-        addonBefore: <Icon type={iconType} />,
-        placeholder: buildFieldDescription(title, '输入'),
-      },
-      ...(inputProps || {}),
-    };
-
-    if (!canOperate) {
-      return (
-        <FormItem {...formItemLayout} label={title} extra={helper}>
-          <Input {...otherInputProps} value={value} />
-        </FormItem>
-      );
-    }
-
-    return (
-      <FormItem {...formItemLayout} label={title} extra={helper} name={name}>
-        <Input {...otherInputProps} />
-      </FormItem>
-    );
-  };
-
+  /** 输入框
+      * 
+      * @param {标题} label 
+      * @param {key} name 
+      * @param {默认值} value 
+      * @param {必填} required 
+      * @param {描述说明详情} helper 
+      * @param {显示Icon} addonBefore 
+      * @param {扩展属性} inputProps 
+      * @param {样式控制} formItemLayout 
+      * @param {提示语} reminderPrefix 
+      * @param {正则匹配扩展 { pattern:new RegExp('^[0-9a-zA-Z_]{1,}$','g'),message:'只允许包含数字、字母、下划线'}} pattern 
+      * @param {禁用} disabled 
+      * @param {回调函数} onChangeCallback 
+      */
   renderFormInputFormItem = (
     label,
     name,
     value = '',
     required = false,
     helper = null,
-    iconType = 'form',
+    addonBefore = null,
     inputProps = {},
-    canOperate = true,
     formItemLayout = {},
     reminderPrefix = '输入',
+    pattern = {},
     disabled = false,
-    selectShow = false,
     onChangeCallback
   ) => {
     const title = label;
-
     const otherInputProps = {
       ...{
-        addonBefore: <Icon type={iconType} />,
-        placeholder: selectShow ? '选择商家后显示' : buildFieldDescription(title, reminderPrefix),
+        addonBefore: addonBefore,
+        placeholder: buildFieldDescription(title, reminderPrefix),
         disabled,
         onChange: (v, option) => {
           if (isFunction(onChangeCallback)) {
@@ -501,327 +407,113 @@ class Index extends CustomCore {
       },
       ...(inputProps || {}),
     };
-
-    if (!canOperate) {
-      return (
-        <FormItem {...formItemLayout} label={title} extra={helper}>
-          <Input {...otherInputProps} value={value} />
-        </FormItem>
-      );
-    }
     return (
-      <FormItem {...formItemLayout}
+      <FormItem
+        {...formItemLayout}
         label={title}
         extra={helper}
         name={name}
         rules={[
-          {
-            required,
-            message: buildFieldDescription(title),
-          },
+          { required, message: buildFieldDescription(title, reminderPrefix) },
+          pattern
         ]}
       >
-        <Input {...otherInputProps} />
+        <Input value={value} {...otherInputProps} />
       </FormItem>
     );
-  };
-
-  renderFormPasswordFormItem = (
-    label,
-    name,
-    value = '',
-    required = false,
-    helper = null,
-    iconType = 'form',
-    inputProps = {},
-    canOperate = true,
-    formItemLayout = {},
-  ) => {
-
-
-
-    const title = label;
-
-    const otherInputProps = {
-      ...{
-        addonBefore: <Icon type={iconType} />,
-        placeholder: buildFieldDescription(title, '输入'),
-      },
-      ...(inputProps || {}),
-    };
-
-    if (!canOperate) {
-      return (
-        <FormItem {...formItemLayout} label={title} extra={helper}>
-          <Password {...otherInputProps} value={value} />
-        </FormItem>
-      );
-    }
-
-    return (
-      <FormItem {...formItemLayout}
-        label={title}
-        extra={helper}
-        name={name}
-        rules={[
-          {
-            required,
-            message: buildFieldDescription(title),
-          },
-        ]}
-      >
-        <Password {...otherInputProps} />
-      </FormItem>
-    );
-  };
-
-  renderFormOnlyShowInputFormItem = (
-    label,
-    value = '',
-    helper = null,
-    iconType = 'form',
-    inputProps = {},
-    formItemLayout = {},
-  ) => {
-    return this.renderFormInputFormItem(
-      label,
-      '',
-      value,
-      false,
-      helper,
-      iconType,
-      inputProps,
-      false,
-      formItemLayout,
-    );
-  };
+  }
 
   renderFormInputNumberFormItem = (
     label,
     name,
-    value = '',
+    value = 0,
     required = false,
     helper = null,
     inputNumberProps = {},
-    canOperate = true,
     formItemLayout = {},
+    reminderPrefix = '输入',
+    disabled = false,
+    onChangeCallback
   ) => {
 
-
     const title = label;
-
     const otherInputNumberProps = {
       ...{
         style: { width: '100%' },
         min: 0,
-        placeholder: buildFieldDescription(title, '输入'),
+        placeholder: buildFieldDescription(title, reminderPrefix),
+        disabled,
+        onChange: (v, option) => {
+          if (isFunction(onChangeCallback)) {
+            onChangeCallback(v, option);
+          }
+        }
       },
       ...(inputNumberProps || {}),
     };
 
-    if (!canOperate) {
-      return (
-        <FormItem {...formItemLayout} label={title} extra={helper}>
-          <InputNumber {...otherInputNumberProps} value={value} />
-        </FormItem>
-      );
-    }
-
     return (
-      <FormItem {...formItemLayout} label={title} extra={helper}
+
+      <FormItem
+        {...formItemLayout}
+        label={title}
+        extra={helper}
         name={name}
         rules={[
-          {
-            required,
-            message: buildFieldDescription(title),
-          },
-        ]}
-
-      >
-        <InputNumber {...otherInputNumberProps} />
-      </FormItem>
-    );
-  };
-
-  renderFormTextAreaFormItem = (
-    label,
-    name,
-    value = '',
-    required = false,
-    helper = null,
-    textAreaProps = {},
-    canOperate = true,
-    formItemLayout = {},
-  ) => {
-
-
-    const title = label;
-
-    const otherTextAreaProps = {
-      ...{
-        placeholder: buildFieldDescription(title, '输入'),
-      },
-      ...(textAreaProps || {}),
-    };
-
-    if (!canOperate) {
-      return (
-        <FormItem {...formItemLayout} label={title} extra={helper}>
-          <TextArea {...otherTextAreaProps} value={value} />
-        </FormItem>
-      );
-    }
-
-    return (
-      <FormItem {...formItemLayout} label={title} extra={helper}
-      name={name}
-        rules={[
-          {
-            required,
-            message: buildFieldDescription(title),
-          },
+          { required, message: buildFieldDescription(title, reminderPrefix) },
         ]}
       >
-        <TextArea {...otherTextAreaProps} />
+        <InputNumber {...otherInputNumberProps} value={value} />
       </FormItem>
     );
-  };
-
-  renderFormDatePickerFormItem = (
-    label,
-    name,
-    value = null,
-    required = false,
-    helper = null,
-    datePickerProps = {},
-    canOperate = true,
-    formItemLayout = {},
-  ) => {
-
-
-    const title = label;
-
-    const otherDatePickerProps = {
-      ...{
-        style: { width: '100%' },
-        showTime: true,
-        format: 'YYYY-MM-DD HH:mm:ss',
-        inputReadOnly: true,
-        placeholder: buildFieldDescription(title, '选择'),
-      },
-      ...(datePickerProps || {}),
-    };
-
-    if (!canOperate) {
-      return (
-        <FormItem {...formItemLayout} label={title} extra={helper}>
-          <DatePicker {...otherDatePickerProps} value={value} />
-        </FormItem>
-      );
-    }
-
-    return (
-      <FormItem {...formItemLayout} label={title} extra={helper}
-      name={name}
-        rules={[
-          {
-            required,
-            message: buildFieldDescription(title),
-          },
-        ]}
-      >
-        <DatePicker {...otherDatePickerProps} />
-      </FormItem>
-    );
-  };
-
-  renderFormSelectFormItem = (
+  }
+  renderFromRadioCore = (
     label,
     name,
     value,
-    renderOptionFunction,
-    helper = null,
+    listDataSource,
     onChangeCallback,
-    formItemLayout = null,
-    required = false,
-    otherProps = null,
+    radioProps = {},
+    formItemLayout = {},
+    helper = null
   ) => {
-
-
-    const otherSelectProps = {
-      ...{
-        placeholder: buildFieldDescription(label, '选择'),
-        style: { width: '100%' },
-        onChange: (v, option) => {
-          if (isFunction(onChangeCallback)) {
-            onChangeCallback(v, option);
-          }
-        },
-      },
-      ...(otherProps || {}),
-    };
-
-    return (
-      <FormItem {...(formItemLayout || {})} label={label} extra={helper}
-      name={name}
-        rules={[
-          {
-            required,
-            message: buildFieldDescription(title),
-          },
-        ]}>
-       <Select {...otherSelectProps}>
-            {isFunction(renderOptionFunction) ? renderOptionFunction() : null}
-          </Select>,
-        
-      </FormItem>
-    );
-  };
-
-  renderFormRadioFormItem = (
-    label,
-    name,
-    value,
-    renderOptionFunction,
-    helper = null,
-    onChangeCallback,
-    formItemLayout = null,
-    required = false,
-    otherProps = null,
-  ) => {
-
-
+    const listData = listDataSource || [];
+    const title = label;
     const otherRadioProps = {
-      ...{
-        placeholder: buildFieldDescription(label, '选择'),
-        style: { width: '100%' },
-        onChange: (v, option) => {
-          if (isFunction(onChangeCallback)) {
-            onChangeCallback(v, option);
-          }
-        },
-      },
-      ...(otherProps || {}),
+      ...(radioProps || {}),
     };
 
+
+
+    onchange = e => {
+      if (isFunction(onChangeCallback)) {
+        onChangeCallback(e);
+      }
+    }
+
     return (
-      <FormItem {...(formItemLayout || {})} label={label} extra={helper}
-      name={name}
-        rules={[
+      <Form.Item name={name} {...(formItemLayout || {})} label={title} extra={helper}>
+        <Radio.Group {...otherRadioProps} defaultValue={value}>
           {
-            required,
-            message: buildFieldDescription(title),
-          },
-        ]}
-      >
-        
-          <RadioGroup {...otherRadioProps}>
-            {isFunction(renderOptionFunction) ? renderOptionFunction() : null}
-          </RadioGroup>,
-        
-      </FormItem>
-    );
+            listData.length > 0 ? listData.map(value => {
+              return <Radio key={value.flag} value={value.flag}>{value.name}</Radio>
+            }) : null
+          }
+        </Radio.Group>
+      </Form.Item>
+      // <FormItem name={name} {...(formItemLayout || {})} label={title} extra={helper}>
+      //     <Radio.Group {...otherRadioProps} onChange={this.onChange} defaultValue={value}>
+      //         {
+      //             listData.length > 0 ? listData.map(value => {
+      //                 return <Radio key={value.flag} value={value.flag}>{value.name}</Radio>
+      //             }) : null
+      //         }
+
+      //     </Radio.Group>
+      // </FormItem>
+    )
   };
+
 }
 
 export default Index;

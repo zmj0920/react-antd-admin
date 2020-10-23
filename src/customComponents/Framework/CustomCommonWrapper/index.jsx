@@ -1,4 +1,4 @@
-import { getDerivedStateFromPropsForUrlParams } from '../../../utils/tools';
+import { getDerivedStateFromPropsForUrlParams } from '@/utils/tools';
 import CustomCommonSupplement from '@/customSpecialComponents/CustomCommonSupplement';
 
 class Index extends CustomCommonSupplement {

@@ -1,9 +1,18 @@
-import React, { PureComponent } from 'react';
-import { Form, Input, InputNumber, Radio } from 'antd';
-import { buildFieldDescription, isFunction, formatDatetime, buildFieldHelper } from '../../../utils/fromTools'
-import { isNumber } from 'lodash';
+import React from 'react';
+import {
+    Form,
+    Input,
+    InputNumber,
+    Radio
+} from 'antd';
+import {
+    buildFieldDescription,
+    isFunction,
+    formatDatetime,
+    buildFieldHelper
+} from '@/utils/tools'
 const FormItem = Form.Item
-import CustomCommonCore  from '@/customComponents/Framework/CustomCommonCore'
+import CustomCommonCore from '@/customComponents/Framework/CustomCommonCore'
 class Index extends CustomCommonCore {
 
     constructor(props) {
@@ -135,15 +144,15 @@ class Index extends CustomCommonCore {
                 onChangeCallback(e);
             }
         }
-       
+
         return (
             <Form.Item name={name} {...(formItemLayout || {})} label={title} extra={helper}>
                 <Radio.Group {...otherRadioProps} defaultValue={value}>
-                        {
+                    {
                         listData.length > 0 ? listData.map(value => {
-                             return <Radio key={value.flag} value={value.flag}>{value.name}</Radio>
-                         }) : null
-                     }
+                            return <Radio key={value.flag} value={value.flag}>{value.name}</Radio>
+                        }) : null
+                    }
                 </Radio.Group>
             </Form.Item>
             // <FormItem name={name} {...(formItemLayout || {})} label={title} extra={helper}>
@@ -161,7 +170,7 @@ class Index extends CustomCommonCore {
 
 
 
-    
+
 }
 
 export default Index
