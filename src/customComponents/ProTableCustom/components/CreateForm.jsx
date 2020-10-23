@@ -2,11 +2,11 @@ import React from 'react';
 import { Modal } from 'antd';
 
 const CreateForm = (props) => {
-  const { modalVisible, onCancel } = props;
+  const { modalVisible, onCancel,modalTitle } = props;
   return (
     <Modal
       destroyOnClose
-      title="新建规则"
+      title={modalTitle}
       visible={modalVisible}
       onCancel={() => onCancel()}
       footer={null}

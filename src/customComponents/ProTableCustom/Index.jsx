@@ -1,4 +1,4 @@
-import React, { PureComponent, createRef } from 'react';
+import { PureComponent, createRef } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -23,15 +23,13 @@ class ProTableCustom extends PureComponent {
       createModalVisible: false,
       updateModalVisible: false,
       stepFormValues: null,
-      selectedRowsState: [],
+      selectedRows: [],
       selectedRowKeys: [],
       row: null
     }
   }
 
-  handleModalVisible = (visible) => {
-    this.setState({ createModalVisible: visible })
-  }
+
 
   handleUpdateModalVisible = (visible) => {
     this.setState({ updateModalVisible: visible })
@@ -41,20 +39,54 @@ class ProTableCustom extends PureComponent {
     // this.setState({row:true})
   }
 
-  setSelectedRows = (selectedRowKeys, selectedRows) => {
+
+  //选择
+  handleSelectRows = (selectedRowKeys, selectedRows) => {
     console.log(selectedRowKeys)
     this.setState({
-      selectedRowsState: selectedRows,
+      selectedRows: selectedRows,
       selectedRowKeys
     })
   }
 
-
+  //清空选择
   cleanSelectedRows = () => {
-    this.setState({ selectedRowsState: [] })
+    this.setState({ selectedRows: [] })
   };
 
+  //刷新数据
+  reloadData = () => {
+    if (this.actionRef.current) {
+      this.actionRef.current.reload();
+    }
+  }
+
+  //重写表格列表配置
   getColumn = () => [];
+
+
+  /**
+   * 新增弹框
+   */
+  onAdd = (visible) => {
+    this.setState({ createModalVisible: visible })
+  };
+
+  /* 表单提交 */
+  handleAdd = (value) => {
+
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   render() {
     const {
@@ -63,13 +95,13 @@ class ProTableCustom extends PureComponent {
       stepFormValues,
       row,
       selectedRowKeys,
-      selectedRowsState,
+      selectedRows,
 
     } = this.state
 
     const rowSelection = {
       selectedRowKeys,
-      onChange: this.setSelectedRows,
+      onChange: this.handleSelectRows,
     };
     return (
       <>
@@ -89,12 +121,12 @@ class ProTableCustom extends PureComponent {
             headerTitle="高级表格"
             rowSelection={rowSelection}
             toolBarRender={() => [
-              <Button type="primary" onClick={() => this.handleModalVisible(true)}>
+              <Button type="primary" onClick={() => this.onAdd(true)}>
                 <PlusOutlined /> 新建
               </Button>,
             ]}
           />
-          {selectedRowsState?.length > 0 && (
+          {selectedRows?.length > 0 && (
             <FooterToolbar
               extra={
                 <div>
@@ -107,14 +139,14 @@ class ProTableCustom extends PureComponent {
                     {selectedRowKeys.length}
                   </a>{' '} 项&nbsp;&nbsp;
                    <span>
-                    服务调用次数总计 {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)} 万
+                    服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
                   </span>
                 </div>
               }
             >
               <Button
                 onClick={() => {
-                  this.handleRemove(selectedRowsState);
+                  this.handleRemove(selectedRows);
                   this.cleanSelectedRows();
                   this.actionRef.current?.reloadAndRest?.();
                 }}
@@ -126,8 +158,9 @@ class ProTableCustom extends PureComponent {
           )
           }
           <CreateForm
-            onCancel={() => this.handleModalVisible(false)}
+            onCancel={() => this.onAdd(false)}
             modalVisible={createModalVisible}
+            modalTitle={"新建表单"}
           >
             <ProTable
               onSubmit={(value) => {

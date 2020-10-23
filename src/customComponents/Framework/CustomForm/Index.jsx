@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{PureComponent} from 'react';
 import {
     Form,
     Input,
@@ -12,8 +12,8 @@ import {
     buildFieldHelper
 } from '@/utils/tools'
 const FormItem = Form.Item
-import CustomCommonCore from '@/customComponents/Framework/CustomCommonCore'
-class Index extends CustomCommonCore {
+
+class Index extends PureComponent {
 
     constructor(props) {
         super(props)

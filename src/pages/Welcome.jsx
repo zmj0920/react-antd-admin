@@ -17,11 +17,7 @@ class Welcome extends ProTableCustom {
       ...this.state,
       ...{
         dataLoading: false,
-        paramsKey: '938bdc77-66b5-4afe-835b-9aa64a7ead5b',
-        // loadDataAfterMount: true,
-        pageName: '添加信息',
-        loadApiPath: 'user/testData',
-        submitApiPath: 'user/testData',
+      
       },
     };
   }
@@ -119,9 +115,7 @@ class Welcome extends ProTableCustom {
   handleAdd = (value) => {
     console.log(value)
     if (value) {
-      if (actionRef.current) {
-        this.actionRef.current.reload();
-      }
+     this.reloadData()
     }
   }
   handleRemove=(value)=>{
