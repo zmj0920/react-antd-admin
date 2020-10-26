@@ -12,7 +12,9 @@ const UpdateForm = (props) => {
     for (let index = 0; index < columns.length; index++) {
       const dataIndex = columns[index].dataIndex;
       if (key == dataIndex) {
-        props.children.props.columns[index]['initialValue'] = arr[i]
+        if (props.children.props.columns[index]['initialValue'] == "") {
+          props.children.props.columns[index]['initialValue'] = arr[i]
+        }
       }
     }
   }

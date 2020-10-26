@@ -68,7 +68,7 @@ class Welcome extends ProTableCustom {
       title: '状态',
       dataIndex: 'status',
       // width: 100,
-      hideInForm: true,
+      hideInForm: false,
       initialValue:'关闭',
       valueEnum: {
         0: {
