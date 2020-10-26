@@ -146,12 +146,12 @@ class ProTableCustom extends PureComponent {
   /**
    * 转化 moment 格式数据为特定类型，false 不做转化
    */
-  dateFormatter="string"
+  dateFormatter = "string"
 
   /**
    * 表头
    */
-  headerTitle="高级表格"
+  headerTitle = "高级表格"
 
   /**
    * 对request 请求数据进行处理
@@ -170,9 +170,35 @@ class ProTableCustom extends PureComponent {
    * 搜索前处理操作
    * @param {搜索参数} params 
    */
-  beforeSearchSubmit=(params)=>{
-     console.log(params)
-     return params
+  beforeSearchSubmit = (params) => {
+    console.log(params)
+    return params
+  }
+
+  /**
+   * table 工具栏，设为 false 时不显示
+   */
+  options = { fullScreen: true, reload: true, setting: true, search: true, }
+  /**
+   * 设置搜索显示不显示search=false
+   */
+  search = {
+    labelWidth: 120,
+  }
+  /**
+   * 搜索表单数据获取antd form 的配置
+   */
+  form = {
+    onValuesChange: (values, all) => {
+      console.log(values, all);
+    },
+  };
+
+  /**
+   * 重置表单事件
+   */
+  resetFn=()=>{
+    console.log("重置表单")
   }
 
   render() {
@@ -183,7 +209,9 @@ class ProTableCustom extends PureComponent {
       selectedRowKeys,
       selectedRows,
     } = this.state
-
+    /**
+     * 多选配置
+     */
     const rowSelection = {
       selectedRowKeys,
       onChange: this.handleSelectRows,
@@ -194,11 +222,9 @@ class ProTableCustom extends PureComponent {
         <PageContainer>
           <ProTable
             columns={this.getColumn()}
-            //不显示分页
             pagination={this.pagination}
-            search={{
-              labelWidth: 120,
-            }}
+            search={this.search}
+            options={this.options}
             actionRef={this.actionRef}
             request={(params) => testData({ ...params })}
             postData={this.postFn}
@@ -210,6 +236,8 @@ class ProTableCustom extends PureComponent {
             tableAlertOptionRender={this.tableAlertOptionRender}
             toolBarRender={this.toolBarRender}
             beforeSearchSubmit={this.beforeSearchSubmit}
+            form={this.form}
+            onReset={this.resetFn}           
           />
           {selectedRows?.length > 0 && (
             <FooterToolbar
