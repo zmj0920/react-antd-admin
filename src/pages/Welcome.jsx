@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { connect, history } from 'umi';
-import { Row, Col, Divider, Form, Input, Icon, Button, message } from 'antd';
+import { Row, Col, Divider, Form, Input, Icon, Button, message,Popconfirm } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
 
@@ -17,17 +17,35 @@ class Welcome extends ProTableCustom {
       ...this.state,
       ...{
         dataLoading: false,
-      
+
       },
     };
   }
+
+
+
+  handleAdd = (value) => {
+    console.log(value)
+    if (value) {
+      this.reloadData()
+    }
+  }
+
+  handleBatchRemove = (selectedRows) => {
+
+  }
+
+  handleDelete = (value) => {
+
+  }
+
   getColumn = () => [
     {
       title: "id",
       dataIndex: 'id',
       // width: 100,
       align: 'center',
-
+      hideInForm: true,
     },
     {
       title: '描述',
@@ -51,6 +69,7 @@ class Welcome extends ProTableCustom {
       dataIndex: 'status',
       // width: 100,
       hideInForm: true,
+      initialValue:'关闭',
       valueEnum: {
         0: {
           text: '关闭',
@@ -99,28 +118,28 @@ class Welcome extends ProTableCustom {
         <>
           <a
             onClick={() => {
-              // handleUpdateModalVisible(true);
-              // setStepFormValues(record);
+              this.onUpdate(true);
+              this.setUpdateFormValues(record);
             }}
           >
             配置
           </a>
           <Divider type="vertical" />
-          <a href="">订阅警报</a>
+          <Popconfirm
+            placement="top"
+            title="确定要删除吗？"
+            onConfirm={this.handleDelete(record)}
+            okText="确定"
+            cancelText="取消">
+            <a>
+              删除
+            </a>
+          </Popconfirm>
         </>
       ),
     },
   ];
 
-  handleAdd = (value) => {
-    console.log(value)
-    if (value) {
-     this.reloadData()
-    }
-  }
-  handleRemove=(value)=>{
-
-  }
 }
 
 

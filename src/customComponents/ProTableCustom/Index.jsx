@@ -22,7 +22,7 @@ class ProTableCustom extends PureComponent {
     this.state = {
       createModalVisible: false,
       updateModalVisible: false,
-      stepFormValues: null,
+      updateFormValues: null,
       selectedRows: [],
       selectedRowKeys: [],
       row: null
@@ -30,17 +30,16 @@ class ProTableCustom extends PureComponent {
   }
 
 
-
-  handleUpdateModalVisible = (visible) => {
-    this.setState({ updateModalVisible: visible })
-  }
-
   setRow = (entity) => {
     // this.setState({row:true})
   }
 
 
-  //选择
+  /**
+   * 批量操作选择
+   * @param {选择key*} selectedRowKeys 
+   * @param {选择的行数据*} selectedRows 
+   */
   handleSelectRows = (selectedRowKeys, selectedRows) => {
     console.log(selectedRowKeys)
     this.setState({
@@ -49,7 +48,9 @@ class ProTableCustom extends PureComponent {
     })
   }
 
-  //清空选择
+  /**
+   * 清空选择数据
+   */
   cleanSelectedRows = () => {
     this.setState({ selectedRows: [] })
   };
@@ -64,7 +65,6 @@ class ProTableCustom extends PureComponent {
   //重写表格列表配置
   getColumn = () => [];
 
-
   /**
    * 新增弹框
    */
@@ -72,37 +72,58 @@ class ProTableCustom extends PureComponent {
     this.setState({ createModalVisible: visible })
   };
 
+  /**
+   * 修改表单弹窗
+   * @param {} visible 
+   */
+  onUpdate = (visible) => {
+    this.setState({ updateModalVisible: visible })
+  }
+
   /* 表单提交 */
   handleAdd = (value) => {
 
   }
 
 
+  /* 修改表单提交 */
+  handleUpdate = (value) => {
 
+  }
 
+  /**
+   * 修改方法获取数据更新
+   * @param {*} record 
+   */
+  setUpdateFormValues = (record) => {
+    this.setState({
+      updateFormValues: record
+    })
+  }
 
-
-
-
-
-
-
+  /**
+   * 批量删除
+   */
+  handleBatchRemove=(selectedRows)=>{
+   
+  }
 
   render() {
     const {
       createModalVisible,
       updateModalVisible,
-      stepFormValues,
-      row,
+      updateFormValues,
       selectedRowKeys,
       selectedRows,
-
     } = this.state
 
     const rowSelection = {
       selectedRowKeys,
       onChange: this.handleSelectRows,
     };
+
+
+
     return (
       <>
         <PageContainer>
@@ -146,7 +167,7 @@ class ProTableCustom extends PureComponent {
             >
               <Button
                 onClick={() => {
-                  this.handleRemove(selectedRows);
+                  this.handleBatchRemove(selectedRows);
                   this.cleanSelectedRows();
                   this.actionRef.current?.reloadAndRest?.();
                 }}
@@ -171,6 +192,27 @@ class ProTableCustom extends PureComponent {
               columns={this.getColumn()}
             />
           </CreateForm>
+
+          {updateFormValues && Object.keys(updateFormValues).length ? (
+            <UpdateForm
+              onCancel={() => {
+                this.onUpdate(false);
+                this.setUpdateFormValues([]);
+              }}
+              modalTitle={"修改表单"}
+              updateModalVisible={updateModalVisible}
+            >
+              <ProTable
+                onSubmit={(value) => {
+                  this.handleUpdate(value);
+                }}
+                rowKey="key"
+                type="form"
+                values={updateFormValues}
+                columns={this.getColumn()}
+              />
+            </UpdateForm>
+          ) : null}
         </PageContainer>
       </>
     );
