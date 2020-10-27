@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd';
-
+import moment from 'moment';
 const UpdateForm = (props) => {
   const { updateModalVisible, onCancel, modalTitle } = props;
   let values = props.children.props.values
@@ -13,10 +13,12 @@ const UpdateForm = (props) => {
     for (let index = 0; index < columns.length; index++) {
       const dataIndex = columns[index].dataIndex;
       if (key == dataIndex) {
-        props.children.props.columns[index]['initialValue'] = arr[i]
-        // if (props.children.props.columns[index]['initialValue'] == "") {
-        //   props.children.props.columns[index]['initialValue'] = arr[i]
-        // }
+        
+        if (columns[index].valueType === "dateTimeRange") {
+          props.children.props.columns[index]['initialValue'] = [moment(arr[i][0]), moment(arr[i][1])]
+        } else {
+          props.children.props.columns[index]['initialValue'] = arr[i]
+        }
       }
     }
   }

@@ -207,7 +207,7 @@ class ProTableCustom extends PureComponent {
     for (let index = 0; index < array.length; index++) {
       array[index].city = "郑州"
     }
-    console.log(array)
+    // console.log(array)
     return array
   }
 
@@ -216,7 +216,7 @@ class ProTableCustom extends PureComponent {
    * @param {搜索参数} params 
    */
   beforeSearchSubmit = (params) => {
-    console.log(params)
+    // console.log(params)
     return params
   }
 
@@ -483,7 +483,6 @@ class ProTableCustom extends PureComponent {
 
     return (
       <>
-        {/* <PageContainer> */}
           <ProTable
             columns={this.getColumn()}
             pagination={this.pagination}
@@ -575,7 +574,6 @@ class ProTableCustom extends PureComponent {
               />
             </UpdateForm>
           ) : null}
-        {/* </PageContainer> */}
      </>
     );
   }

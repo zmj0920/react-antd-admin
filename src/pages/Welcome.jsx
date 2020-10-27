@@ -5,6 +5,8 @@ import { SettingOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
 import { testData } from '@/services/user'
 import request from 'umi-request';
+import moment from 'moment';
+import style from './Welcome.less'
 @connect(({ user, global, loading }) => ({
   global,
   user,
@@ -118,6 +120,11 @@ class Welcome extends ProTableCustom {
       key: 'dateTimeRange',
       dataIndex: 'createdAtRange',
       valueType: 'dateTimeRange',
+      // hideInForm: true,
+      initialValue: [moment('2019-11-16 12:50:26'), moment('2019-11-16 12:50:26')],
+      fieldProps:{
+        className: `${style.pre}`,
+      },
       search: {
         transform: value => ({//转化值的 key, 一般用于事件区间的转化
           startTime: value[0],
