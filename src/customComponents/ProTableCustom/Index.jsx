@@ -18,7 +18,7 @@ import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
 import { testData } from '@/services/user'
-import request from 'umi-request';
+// import request from 'umi-request';
 class ProTableCustom extends PureComponent {
   actionRef = createRef();
   constructor(props) {
@@ -86,8 +86,6 @@ class ProTableCustom extends PureComponent {
     this.setState({ selectedRows: [] })
   };
 
-
-
   //重写表格列表配置
   getColumn = () => [];
 
@@ -111,7 +109,6 @@ class ProTableCustom extends PureComponent {
 
   }
 
-
   /* 修改表单提交 */
   handleUpdate = (value) => {
 
@@ -134,8 +131,6 @@ class ProTableCustom extends PureComponent {
 
   }
 
-  
-
   /**
    * 自定义批量操作工具栏右侧选项区域, false 时不显示
    * @param {*} param0 
@@ -156,7 +151,7 @@ class ProTableCustom extends PureComponent {
    */
   toolBarRender = () => {
     return [
-      <Button type="primary" onClick={() => this.onAdd(true)}>
+      <Button type="primary" key="newButton" onClick={() => this.onAdd(true)}>
         <PlusOutlined /> 新建
       </Button>,
     ]
@@ -167,11 +162,13 @@ class ProTableCustom extends PureComponent {
    */
   // pagination = true
 
+  /**
+   * 分页配置
+   */
   pagination = {
     showQuickJumper: false,//是否显示跳转页
     pageSize: 10,        //配置默认显示数据条数
   }
-
 
   /**
    * 表格数据配置
@@ -184,8 +181,8 @@ class ProTableCustom extends PureComponent {
     "createdAt": "2020-10-26T06:34:17.289Z", "progress": 19
   },
   {
-    "id": 98, "key": 98, "disabled": false, "href": "https://ant.design", 
-    "avatar":"https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png",
+    "id": 98, "key": 98, "disabled": false, "href": "https://ant.design",
+    "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png",
     "name": "TradeCode 98", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 416,
     "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z",
     "createdAt": "2020-10-26T06:34:17.289Z", "progress": 97
@@ -228,8 +225,6 @@ class ProTableCustom extends PureComponent {
    */
   options = { fullScreen: true, reload: true, setting: true, search: true, }
 
-
-
   /**
    * 不同屏幕显示方式
    */
@@ -245,7 +240,6 @@ class ProTableCustom extends PureComponent {
   /**
   * 设置搜索显示不显示search=false
   */
-
   search = {
     labelWidth: 120,//标签的宽度
     span: this.defaultColConfig,//搜索栏显示方式
@@ -285,6 +279,7 @@ class ProTableCustom extends PureComponent {
     //   return null
     // }
   }
+
   /**
    * 搜索表单数据获取antd form 的配置
    */
@@ -441,6 +436,7 @@ class ProTableCustom extends PureComponent {
     //   </>
     // )
   }
+
   /**
    * 用于查询多余参数
    */
@@ -453,6 +449,14 @@ class ProTableCustom extends PureComponent {
 
   }
 
+  /**
+   * 渲染表格请求函数
+   * @param {请求参数} params 
+   */
+  getRequest = (params) => {
+    // return testData({ ...params })
+  }
+
   render() {
     const {
       createModalVisible,
@@ -461,6 +465,7 @@ class ProTableCustom extends PureComponent {
       selectedRowKeys,
       selectedRows,
     } = this.state
+
     /**
      * 多选配置
      */
@@ -469,23 +474,27 @@ class ProTableCustom extends PureComponent {
       onChange: this.handleSelectRows,
     };
 
+    /**
+     * 嵌套表格
+     */
     const expandable = {
       expandedRowRender: this.expandedRowRender
     }
 
     return (
       <>
-        <PageContainer>
+        {/* <PageContainer> */}
           <ProTable
             columns={this.getColumn()}
             pagination={this.pagination}
             search={this.search}
             options={this.options}
             actionRef={this.actionRef}
-            request={(params) => testData({ ...params })}
+            // request={(params) => testData({ ...params })}
+            request={(params) => this.getRequest(params)}
             postData={this.postFn}
             dataSource={this.dataSource}
-            rowKey="key"
+            rowKey='key'
             dateFormatter={this.dateFormatter}
             headerTitle={this.headerTitle}
             rowSelection={rowSelection}
@@ -566,8 +575,8 @@ class ProTableCustom extends PureComponent {
               />
             </UpdateForm>
           ) : null}
-        </PageContainer>
-      </>
+        {/* </PageContainer> */}
+     </>
     );
   }
 }

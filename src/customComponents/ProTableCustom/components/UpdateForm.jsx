@@ -5,6 +5,7 @@ const UpdateForm = (props) => {
   const { updateModalVisible, onCancel, modalTitle } = props;
   let values = props.children.props.values
   let columns = props.children.props.columns
+  console.log(props.children)
   let array = Object.keys(values)
   let arr = Object.values(values)
   for (let i = 0; i < array.length; i++) {
@@ -19,6 +20,7 @@ const UpdateForm = (props) => {
       }
     }
   }
+  console.log(props.children)
   return (
     <Modal
       title={modalTitle}

@@ -3,6 +3,7 @@ import { connect, history } from 'umi';
 import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
+import { testData } from '@/services/user'
 import request from 'umi-request';
 @connect(({ user, global, loading }) => ({
   global,
@@ -47,20 +48,8 @@ class Welcome extends ProTableCustom {
 
   }
 
-  testData = () => {
-    const { dispatch } = this.props
-
-    dispatch({
-      type: 'user/testData',
-      payload: {
-        current: 1,
-        pageSize: 10
-      },
-    }).then(() => {
-      const data = this.getApiData(this.props);
-      this.reloadData();
-      console.log(data)
-    });
+  getRequest = (params) => {
+    return testData({ ...params })
   }
 
   getColumn = () => [
@@ -149,9 +138,9 @@ class Welcome extends ProTableCustom {
       dataIndex: 'status',
       // width: 100,
       hideInForm: false,
-      // initialValue: 'all',
+      //  initialValue: 'all',
       initialValue: ['all'], //多选
-      // valueType: 'select', // 表单类型和request一起使用
+      //  valueType: 'select', // 表单类型和request一起使用
       // valueType: 'radio', //单选状态
       // valueType: 'radioButton', //单选按钮状态
       valueType: 'checkbox',//多选
@@ -213,19 +202,6 @@ class Welcome extends ProTableCustom {
       sorter: true,
       valueType: 'dateTime',
       hideInForm: false,
-      renderFormItem: (item, { defaultRender, ...rest }, form) => {
-        const status = form.getFieldValue('status');
-
-        if (`${status}` === '0') {
-          return false;
-        }
-
-        if (`${status}` === '3') {
-          return <Input {...rest} placeholder="请输入异常原因！" />;
-        }
-
-        return defaultRender(item);
-      },
     },
     {
       title: '操作',
@@ -254,13 +230,13 @@ class Welcome extends ProTableCustom {
             </a>
           </Popconfirm>
           <Divider type="vertical" />
-          <a
+          {/* <a
             onClick={() => {
               this.testData(record)
             }}
           >
             清空选中
-          </a>
+          </a> */}
           <Divider type="vertical" />
         </>
       ),
