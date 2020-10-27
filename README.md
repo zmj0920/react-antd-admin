@@ -2,11 +2,13 @@
 
 
 #### 前言
-以下文章纯属个人理解，便于记录学习，肯定有理解错误或理解不到位的地方，
-意在站在前辈的肩膀，分享个人对技术的通俗理解，共同成长！
+以下文章纯属个人理解，便于记录学习，肯定有理解错误或理解不到位的地方欢迎指正，
+分享个人对技术的通俗理解，共同成长！
 
 > Author:君吟
+
 > Email: 506499594@qq.com  
+
 > github: https://github.com/zmj0920/FleetingTime
 
 
@@ -66,7 +68,9 @@ class ProTableCustom extends PureComponent {
     }
   }
 
-  //刷新数据
+  /**
+   * 刷新数据
+  */
   reloadData = () => {
     if (this.actionRef.current) {
       this.actionRef.current.reload();
@@ -113,7 +117,9 @@ class ProTableCustom extends PureComponent {
 
 
 
-  //重写表格列表配置
+  /**
+   * 重写表格列表配置
+  */
   getColumn = () => [];
 
   /**
@@ -131,13 +137,17 @@ class ProTableCustom extends PureComponent {
     this.setState({ updateModalVisible: visible })
   }
 
-  /* 表单提交 */
+  /**
+   * 表单提交
+   */
   handleAdd = (value) => {
 
   }
 
 
-  /* 修改表单提交 */
+  /**
+   * 修改表单提交
+   */
   handleUpdate = (value) => {
 
   }
@@ -190,6 +200,9 @@ class ProTableCustom extends PureComponent {
    */
   // pagination = true
 
+  /**
+   * 分页配置
+  */
   pagination = {
     showQuickJumper: false,//是否显示跳转页
     pageSize: 10,        //配置默认显示数据条数
@@ -200,16 +213,34 @@ class ProTableCustom extends PureComponent {
    * 表格数据配置
    */
   dataSource = [{
-    "id": 99, "key": 99, "disabled": false, "href": "https://ant.design",
+    "id": 99, 
+    "key": 99, 
+    "disabled": false, 
+    "href": "https://ant.design",
     "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png",
-    "name": "TradeCode 99", "owner": "曲丽丽", "desc": "这是一段描述",
-    "callNo": 510, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 19
+    "name": "TradeCode 99", 
+    "owner": "曲丽丽", 
+    "desc": "这是一段描述",
+    "callNo": 510, 
+    "status": 2, 
+    "updatedAt": "2020-10-26T06:34:17.289Z", 
+    "createdAt": "2020-10-26T06:34:17.289Z", 
+    "progress": 19
   },
   {
-    "id": 98, "key": 98, "disabled": false, "href": "https://ant.design", "avatar":
-      "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png",
-    "name": "TradeCode 98", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 416,
-    "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 97
+    "id": 98, 
+    "key": 98, 
+    "disabled": false, 
+    "href": "https://ant.design", 
+    "avatar":"https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png",
+    "name": "TradeCode 98", 
+    "owner": "曲丽丽", 
+    "desc": "这是一段描述", 
+    "callNo": 416,
+    "status": 1, 
+    "updatedAt": "2020-10-26T06:34:17.289Z", 
+    "createdAt": "2020-10-26T06:34:17.289Z", 
+    "progress": 97
   }]
 
   /**
@@ -247,9 +278,12 @@ class ProTableCustom extends PureComponent {
   /**
    * table 工具栏，设为 false 时不显示
    */
-  options = { fullScreen: true, reload: true, setting: true, search: true, }
-
-
+  options = { 
+    fullScreen: true, 
+    reload: true, 
+    setting: true, 
+    search: true, 
+    }
 
   /**
    * 不同屏幕显示方式
@@ -266,7 +300,6 @@ class ProTableCustom extends PureComponent {
   /**
   * 设置搜索显示不显示search=false
   */
-
   search = {
     labelWidth: 120,//标签的宽度
     span: this.defaultColConfig,//搜索栏显示方式
@@ -306,6 +339,7 @@ class ProTableCustom extends PureComponent {
     //   return null
     // }
   }
+
   /**
    * 搜索表单数据获取antd form 的配置
    */
@@ -400,7 +434,10 @@ class ProTableCustom extends PureComponent {
           marginTop: 8,
         }}
       >
-        <ProFormDatePicker name="startdate" label="响应日期" />
+        <ProFormDatePicker 
+        name="startdate" 
+        label="响应日期" 
+        />
       </LightFilter>
     ),
     tabs: {
@@ -451,18 +488,35 @@ class ProTableCustom extends PureComponent {
       <>
         <Card>
           <Descriptions size="small" column={3}>
-            <Descriptions.Item label="Row">{data.length}</Descriptions.Item>
-            <Descriptions.Item label="Created">Lili Qu</Descriptions.Item>
-            <Descriptions.Item label="Association">
+            <Descriptions.Item label="Row">
+            {data.length}
+            </Descriptions.Item>
+            <Descriptions.Item 
+            label="Created"
+            >
+            Lili Qu
+            </Descriptions.Item>
+            <Descriptions.Item 
+            label="Association"
+            >
               <a>421421</a>
             </Descriptions.Item>
-            <Descriptions.Item label="Creation Time">2017-01-10</Descriptions.Item>
-            <Descriptions.Item label="Effective Time">2017-10-10</Descriptions.Item>
+            <Descriptions.Item 
+            label="Creation Time"
+            >
+            2017-01-10
+            </Descriptions.Item>
+            <Descriptions.Item 
+            label="Effective Time"
+            >
+            2017-10-10
+            </Descriptions.Item>
           </Descriptions>
         </Card>
       </>
     )
   }
+
   /**
    * 用于查询多余参数
    */
@@ -483,6 +537,7 @@ class ProTableCustom extends PureComponent {
       selectedRowKeys,
       selectedRows,
     } = this.state
+
     /**
      * 多选配置
      */
@@ -491,6 +546,9 @@ class ProTableCustom extends PureComponent {
       onChange: this.handleSelectRows,
     };
 
+    /**
+     * 嵌套表格配置
+    */
     const expandable = {
       expandedRowRender: this.expandedRowRender
     }
@@ -567,7 +625,6 @@ class ProTableCustom extends PureComponent {
               columns={this.getColumn()}
             />
           </CreateForm>
-
           {updateFormValues && Object.keys(updateFormValues).length ? (
             <UpdateForm
               onCancel={() => {
@@ -597,12 +654,22 @@ class ProTableCustom extends PureComponent {
 export default ProTableCustom;
 ```
 
-## 继承ProTableCustom
+## 继承ProTableCustom使用方式
 
 ```jsx
 import React, { Component, createRef } from 'react';
 import { connect, history } from 'umi';
-import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
+import { 
+  Row, 
+  Col, 
+  Divider, 
+  Form, 
+  Input, 
+  Icon, 
+  Button, 
+  message, 
+  Popconfirm 
+  } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
 import request from 'umi-request';
@@ -611,7 +678,7 @@ import request from 'umi-request';
   user,
   loading: loading.models.user,
 }))
-class Welcome extends ProTableCustom {
+class Index extends ProTableCustom {
 
   constructor(props) {
     super(props)
@@ -643,7 +710,7 @@ class Welcome extends ProTableCustom {
     {
       title: "id",
       dataIndex: 'id',
-      // width: 100,
+       width: 100,
       align: 'center',
       hideInForm: true,
     },
@@ -665,14 +732,18 @@ class Welcome extends ProTableCustom {
       // | dateTime | 日期和时间 | 2019-11-16 12:50:00 |
       // | dateTimeRange | 日期和时间区间 | 2019-11-16 12:50:00 2019-11-18 12:50:00 |
       // | time | 时间 | 12:50:00 |
-      // | option | 操作项，会自动增加 marginRight，只支持一个数组,表单中会自动忽略 | `[<a>操作a</a>,<a>操作b</a>]` |
+      // | option | 操作项，会自动增加 marginRight，只支持一个数组,
+      //表单中会自动忽略 | `[<a>操作a</a>,<a>操作b</a>]` |
       // | text | 默认值，不做任何处理 | - |
       // | select | 选择 | - |
       // | textarea | 与 text 相同， form 转化时会转为 textarea 组件 | - |
       // | index | 序号列 | - |
       // | indexBorder | 带 border 的序号列 | - |
       // | progress | 进度条 | - |
-      // | digit | [格式化](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)数字展示，form 转化时会转为 inputNumber | - |
+      // | digit | [格式化]
+      //(https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/
+      //Reference/Global_Objects/Intl/NumberFormat)
+      //数字展示，form 转化时会转为 inputNumber | - |
       // | percent | 百分比 | +1.12 |
       // | code | 代码块 | `const a = b` |
       // | avatar | 头像 | 展示一个头像 |
@@ -696,9 +767,7 @@ class Welcome extends ProTableCustom {
       //   return defaultRender(item);
       // },
       tooltip: '会在 title 之后展示一个 icon，hover 之后提示一些信息',
-      // width: '30%',
       // search: false,
-      // search.transform
     },
     {
       title: '时间区间',
@@ -731,7 +800,7 @@ class Welcome extends ProTableCustom {
       // valueType: 'radio', //单选状态
       // valueType: 'radioButton', //单选按钮状态
       valueType: 'checkbox',//多选
-      request: async () => [
+      request: async () => [  //请求接口使用方式
         {
           label: '全部',
           value: 'all',
@@ -807,7 +876,6 @@ class Welcome extends ProTableCustom {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      // fixed: 'right',
       render: (_, record) => (
         <>
           <a
@@ -843,6 +911,5 @@ class Welcome extends ProTableCustom {
     },
   ];
 }
-
-export default Welcome
+export default Index
 ```

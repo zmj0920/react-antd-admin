@@ -134,6 +134,8 @@ class ProTableCustom extends PureComponent {
 
   }
 
+  
+
   /**
    * 自定义批量操作工具栏右侧选项区域, false 时不显示
    * @param {*} param0 
@@ -178,13 +180,15 @@ class ProTableCustom extends PureComponent {
     "id": 99, "key": 99, "disabled": false, "href": "https://ant.design",
     "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png",
     "name": "TradeCode 99", "owner": "曲丽丽", "desc": "这是一段描述",
-    "callNo": 510, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 19
+    "callNo": 510, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z",
+    "createdAt": "2020-10-26T06:34:17.289Z", "progress": 19
   },
   {
-    "id": 98, "key": 98, "disabled": false, "href": "https://ant.design", "avatar":
-      "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png",
+    "id": 98, "key": 98, "disabled": false, "href": "https://ant.design", 
+    "avatar":"https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png",
     "name": "TradeCode 98", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 416,
-    "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 97
+    "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z",
+    "createdAt": "2020-10-26T06:34:17.289Z", "progress": 97
   }]
 
   /**
