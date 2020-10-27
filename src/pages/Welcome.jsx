@@ -3,29 +3,27 @@ import { connect, history } from 'umi';
 import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
-import { testData } from '@/services/user'
+import { testData } from '@/services/user';
 import request from 'umi-request';
 import moment from 'moment';
-import style from './Welcome.less'
+import style from './Welcome.less';
 @connect(({ user, global, loading }) => ({
   global,
   user,
   loading: loading.models.user,
 }))
 class Welcome extends ProTableCustom {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       ...this.state,
       ...{
         dataLoading: false,
-
       },
     };
   }
 
-  getApiData = props => {
+  getApiData = (props) => {
     const {
       user: { data },
     } = props;
@@ -33,47 +31,43 @@ class Welcome extends ProTableCustom {
     return data;
   };
 
-
-
   handleAdd = (value) => {
-    console.log(value)
+    console.log(value);
     if (value) {
-      this.reloadData()
+      this.reloadData();
     }
-  }
+  };
 
-  handleBatchRemove = (selectedRows) => {
+  handleBatchRemove = (selectedRows) => {};
 
-  }
-
-  handleDelete = (value) => {
-
-  }
+  handleDelete = (value) => {};
 
   getRequest = (params) => {
-    return testData({ ...params })
-  }
+    return testData({ ...params });
+  };
 
   getColumn = () => [
     {
-      title: "id",
+      title: '编号',
       dataIndex: 'id',
-      // width: 100,
+      width: 80,
       align: 'center',
       hideInForm: true,
     },
     {
       title: '描述',
       dataIndex: 'desc',
-      copyable: true,//是否支持复制
-      ellipsis: true,//是否自动缩略
+      width: 80,
+      align: 'center',
+      copyable: true, //是否支持复制
+      ellipsis: true, //是否自动缩略
       // valueEnum: { //枚举值显示
       //   all: {
       //     text: '全部',
       //     status: 'Default',
       //   },
       //}
-      // valueType:'',//值的显示类型 
+      // valueType:'',//值的显示类型
       // | money | 转化值为金额 | ¥10,000.26 |
       // | date | 日期 | 2019-11-16 |
       // | dateRange | 日期区间 | 2019-11-16 2019-11-18 |
@@ -118,15 +112,18 @@ class Welcome extends ProTableCustom {
     {
       title: '时间区间',
       key: 'dateTimeRange',
+      width: 100,
+      align: 'center',
       dataIndex: 'createdAtRange',
       valueType: 'dateTimeRange',
       // hideInForm: true,
       initialValue: [moment('2019-11-16 12:50:26'), moment('2019-11-16 12:50:26')],
-      fieldProps:{
+      fieldProps: {
         className: `${style.pre}`,
       },
       search: {
-        transform: value => ({//转化值的 key, 一般用于事件区间的转化
+        transform: (value) => ({
+          //转化值的 key, 一般用于事件区间的转化
           startTime: value[0],
           endTime: value[1],
         }),
@@ -135,7 +132,8 @@ class Welcome extends ProTableCustom {
     {
       title: '服务调用次数',
       dataIndex: 'callNo',
-      // width: 200,
+      width: 100,
+      align: 'center',
       sorter: true,
       hideInForm: true,
       renderText: (val) => `${val} 万`,
@@ -143,6 +141,8 @@ class Welcome extends ProTableCustom {
     {
       title: '状态',
       dataIndex: 'status',
+      width: 100,
+      align: 'center',
       // width: 100,
       hideInForm: false,
       //  initialValue: 'all',
@@ -150,7 +150,7 @@ class Welcome extends ProTableCustom {
       //  valueType: 'select', // 表单类型和request一起使用
       // valueType: 'radio', //单选状态
       // valueType: 'radioButton', //单选按钮状态
-      valueType: 'checkbox',//多选
+      valueType: 'checkbox', //多选
       request: async () => [
         {
           label: '全部',
@@ -177,7 +177,6 @@ class Welcome extends ProTableCustom {
           value: 'running',
           status: 'Processing',
         },
-
       ],
       // valueEnum: {
       //   all: {
@@ -205,7 +204,8 @@ class Welcome extends ProTableCustom {
     {
       title: '上次调度时间',
       dataIndex: 'updatedAt',
-      // width: 100,
+      align: 'center',
+      width: 100,
       sorter: true,
       valueType: 'dateTime',
       hideInForm: false,
@@ -214,7 +214,10 @@ class Welcome extends ProTableCustom {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
-      // fixed: 'right',
+      width: 80,
+      align: 'center',
+      fixed: 'right',
+      // fixed: 'left',
       render: (_, record) => (
         <>
           <a
@@ -231,10 +234,9 @@ class Welcome extends ProTableCustom {
             title="确定要删除吗？"
             onConfirm={this.handleDelete(record)}
             okText="确定"
-            cancelText="取消">
-            <a>
-              删除
-            </a>
+            cancelText="取消"
+          >
+            <a>删除</a>
           </Popconfirm>
           <Divider type="vertical" />
           {/* <a
@@ -249,9 +251,6 @@ class Welcome extends ProTableCustom {
       ),
     },
   ];
-
 }
 
-
-
-export default Welcome
+export default Welcome;
