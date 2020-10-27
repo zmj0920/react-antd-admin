@@ -6,7 +6,12 @@ function getFakeCaptcha(req, res) {
   return res.json('captcha-xxx');
 } // 代码中会兼容本地 service mock 以及部署站点的静态数据
 
-// mock tableListDataSource
+const valueEnum = {
+  0: 'close',
+  1: 'running',
+  2: 'online',
+  3: 'error',
+};
 const genList = (pageNo, pageSize) => {
   const tableListDataSource = [];
 
@@ -25,9 +30,13 @@ const genList = (pageNo, pageSize) => {
       owner: '曲丽丽',
       desc: '这是一段描述',
       callNo: Math.floor(Math.random() * 1000),
-      status: Math.floor(Math.random() * 10) % 4,
+      status: valueEnum[Math.floor(Math.random() * 10) % 4],
       updatedAt: new Date(),
       createdAt: new Date(),
+      createdAtRange: [
+        Date.now() - Math.floor(Math.random() * 2000),
+        Date.now() - Math.floor(Math.random() * 2000),
+      ],
       progress: Math.ceil(Math.random() * 100),
     });
   }

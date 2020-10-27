@@ -7,8 +7,12 @@ import {
   Divider,
   message,
   Input,
-  Drawer
+  Drawer,
+  Badge,
+  Card,
+  Descriptions
 } from 'antd';
+import { LightFilter, ProFormDatePicker } from '@ant-design/pro-form';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
@@ -25,15 +29,42 @@ class ProTableCustom extends PureComponent {
       updateFormValues: null,
       selectedRows: [],
       selectedRowKeys: [],
-      row: null
     }
   }
 
-
-  setRow = (entity) => {
-    // this.setState({row:true})
+  /**
+   * 加载更多
+   */
+  fetchMore = () => {
+    if (this.actionRef.current) {
+      this.actionRef.current.fetchMore();
+    }
   }
 
+  //刷新数据
+  reloadData = () => {
+    if (this.actionRef.current) {
+      this.actionRef.current.reload();
+    }
+  }
+
+  /**
+   * 重置到默认状态
+   */
+  fromReset = () => {
+    if (this.actionRef.current) {
+      this.actionRef.current.reset();
+    }
+  }
+
+  /**
+   * 清空选中项
+   */
+  clearSelected = () => {
+    if (this.actionRef.current) {
+      this.actionRef.current.clearSelected();
+    }
+  }
 
   /**
    * 批量操作选择
@@ -55,12 +86,7 @@ class ProTableCustom extends PureComponent {
     this.setState({ selectedRows: [] })
   };
 
-  //刷新数据
-  reloadData = () => {
-    if (this.actionRef.current) {
-      this.actionRef.current.reload();
-    }
-  }
+
 
   //重写表格列表配置
   getColumn = () => [];
@@ -137,11 +163,29 @@ class ProTableCustom extends PureComponent {
   /**
    * 分页配置 false 不显示分页
    */
-  pagination = true
+  // pagination = true
+
+  pagination = {
+    showQuickJumper: false,//是否显示跳转页
+    pageSize: 10,        //配置默认显示数据条数
+  }
+
+
   /**
    * 表格数据配置
    */
-  dataSource = [{ "id": 99, "key": 99, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 99", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 510, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 19 }, { "id": 98, "key": 98, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 98", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 416, "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 97 }, { "id": 97, "key": 97, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 97", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 182, "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 48 }, { "id": 96, "key": 96, "disabled": true, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 96", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 799, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 96 }, { "id": 95, "key": 95, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 95", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 34, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 1 }, { "id": 94, "key": 94, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 94", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 687, "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 65 }, { "id": 93, "key": 93, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 93", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 255, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 64 }, { "id": 92, "key": 92, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 92", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 102, "status": 3, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 13 }, { "id": 91, "key": 91, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 91", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 359, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 21 }, { "id": 90, "key": 90, "disabled": true, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 90", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 398, "status": 3, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 73 }, { "id": 89, "key": 89, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 89", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 355, "status": 0, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 94 }, { "id": 88, "key": 88, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 88", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 427, "status": 3, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 57 }, { "id": 87, "key": 87, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 87", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 571, "status": 0, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 98 }, { "id": 86, "key": 86, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 86", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 804, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 36 }, { "id": 85, "key": 85, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 85", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 252, "status": 0, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 56 }, { "id": 84, "key": 84, "disabled": true, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 84", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 104, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 78 }, { "id": 83, "key": 83, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 83", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 244, "status": 3, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 64 }, { "id": 82, "key": 82, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 82", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 81, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 28 }, { "id": 81, "key": 81, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png", "name": "TradeCode 81", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 97, "status": 3, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 72 }, { "id": 80, "key": 80, "disabled": false, "href": "https://ant.design", "avatar": "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png", "name": "TradeCode 80", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 447, "status": 3, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 76 }]
+  dataSource = [{
+    "id": 99, "key": 99, "disabled": false, "href": "https://ant.design",
+    "avatar": "https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png",
+    "name": "TradeCode 99", "owner": "曲丽丽", "desc": "这是一段描述",
+    "callNo": 510, "status": 2, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 19
+  },
+  {
+    "id": 98, "key": 98, "disabled": false, "href": "https://ant.design", "avatar":
+      "https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png",
+    "name": "TradeCode 98", "owner": "曲丽丽", "desc": "这是一段描述", "callNo": 416,
+    "status": 1, "updatedAt": "2020-10-26T06:34:17.289Z", "createdAt": "2020-10-26T06:34:17.289Z", "progress": 97
+  }]
 
   /**
    * 转化 moment 格式数据为特定类型，false 不做转化
@@ -179,11 +223,63 @@ class ProTableCustom extends PureComponent {
    * table 工具栏，设为 false 时不显示
    */
   options = { fullScreen: true, reload: true, setting: true, search: true, }
+
+
+
   /**
-   * 设置搜索显示不显示search=false
+   * 不同屏幕显示方式
    */
+  defaultColConfig = {
+    xs: 24,
+    sm: 24,
+    md: 12,
+    lg: 12,
+    xl: 8,
+    xxl: 6,
+  };
+
+  /**
+  * 设置搜索显示不显示search=false
+  */
+
   search = {
-    labelWidth: 120,
+    labelWidth: 120,//标签的宽度
+    span: this.defaultColConfig,//搜索栏显示方式
+    // searchText:'搜索',
+    //resetText：'重置',
+    // submitText:'提交'
+    // defaultCollapsed: false,//设置面板默认值
+    // filterType: 'light',//轻量级表格查询配置
+    // collapsed:false,  //是否收起
+    //是否收起事件
+    // onCollapse: (collapsed)=>{
+    //    console.log(collapsed)
+    // },
+    //搜索栏工具重写
+    // optionRender: ({ searchText, resetText }, { form }) => [
+    //   <Button
+    //     key="searchText"
+    //     type="primary"
+    //     onClick={() => {
+    //       form?.submit();
+    //     }}
+    //   >
+    //     {searchText}
+    //   </Button>,
+    //   <Button
+    //     key="resetText"
+    //     onClick={() => {
+    //       form?.resetFields();
+    //     }}
+    //   >
+    //     {resetText}
+    //   </Button>,
+    //   <Button key="out">导出</Button>,
+    // ],
+    //收起按钮配置
+    // collapseRender: (collapsed, showCollapseButton) => {
+    //   return null
+    // }
   }
   /**
    * 搜索表单数据获取antd form 的配置
@@ -197,8 +293,160 @@ class ProTableCustom extends PureComponent {
   /**
    * 重置表单事件
    */
-  resetFn=()=>{
+  resetFn = () => {
     console.log("重置表单")
+  }
+
+
+  /**
+   * 表格嵌套
+   */
+  // expandedRowRender = () => {
+  //   const data = [];
+  //   for (let i = 0; i < 3; i += 1) {
+  //     data.push({
+  //       key: i,
+  //       date: '2014-12-24 23:12:00',
+  //       name: 'This is production name',
+  //       upgradeNum: 'Upgraded: 56',
+  //     });
+  //   }
+  //   return (
+  //     <ProTable
+  //       columns={[
+  //         {
+  //           title: 'Date',
+  //           dataIndex: 'date',
+  //           key: 'date',
+  //         },
+  //         {
+  //           title: 'Name',
+  //           dataIndex: 'name',
+  //           key: 'name',
+  //         },
+  //         {
+  //           title: 'Upgrade Status',
+  //           dataIndex: 'upgradeNum',
+  //           key: 'upgradeNum',
+  //         },
+  //         {
+  //           title: 'Action',
+  //           dataIndex: 'operation',
+  //           key: 'operation',
+  //           valueType: 'option',
+  //           render: () => [<a key="Pause">Pause</a>, <a key="Stop">Stop</a>],
+  //         },
+  //       ]}
+  //       headerTitle={false}
+  //       search={false}
+  //       options={false}
+  //       dataSource={data}
+  //       pagination={false}
+  //     />
+  //   );
+  // };
+
+  /**
+   * 关闭表格嵌套
+   */
+  expandedRowRender = false
+
+  renderBadge = count => (
+    <Badge
+      count={count}
+      style={{
+        marginTop: -4,
+        marginLeft: 4,
+        color: '#999',
+        backgroundColor: '#eee',
+      }}
+    />
+  );
+
+  /**
+   * 自定义工具栏渲染
+   */
+  // toolbar = {
+  //   multipleLine: true,
+  //   filter: (
+  //     <LightFilter
+  //       style={{
+  //         marginTop: 8,
+  //       }}
+  //     >
+  //       <ProFormDatePicker name="startdate" label="响应日期" />
+  //     </LightFilter>
+  //   ),
+  //   tabs: {
+  //     items: [
+  //       {
+  //         key: 'tab1',
+  //         tab: '标签一',
+  //       },
+  //       {
+  //         key: 'tab2',
+  //         tab: '标签二',
+  //       },
+  //     ],
+  //   },
+  //   menu: {
+  //     type: 'inline',
+  //     items: [
+  //       {
+  //         label: <span>全部应用{this.renderBadge(101)}</span>,
+  //         key: 'all',
+  //       },
+  //       {
+  //         label: <span>我创建的应用{this.renderBadge(3)}</span>,
+  //         key: 'todo',
+  //       },
+  //     ],
+  //   },
+  //   actions: [
+  //     <Button key="primary" type="primary">
+  //       新建应用
+  //     </Button>,
+  //   ],
+  // }
+
+  /**
+   * 自定义工具栏渲染
+   */
+  toolbar = false
+
+  /**
+   * 配置主题显示数据
+   * @param {*} _ 
+   * @param {*} data 
+   */
+  tableExtraRender = (_, data) => {
+    return null
+    // return (
+    //   <>
+    //     <Card>
+    //       <Descriptions size="small" column={3}>
+    //         <Descriptions.Item label="Row">{data.length}</Descriptions.Item>
+    //         <Descriptions.Item label="Created">Lili Qu</Descriptions.Item>
+    //         <Descriptions.Item label="Association">
+    //           <a>421421</a>
+    //         </Descriptions.Item>
+    //         <Descriptions.Item label="Creation Time">2017-01-10</Descriptions.Item>
+    //         <Descriptions.Item label="Effective Time">2017-10-10</Descriptions.Item>
+    //       </Descriptions>
+    //     </Card>
+    //   </>
+    // )
+  }
+  /**
+   * 用于查询多余参数
+   */
+  params = {}
+
+  /**
+   * 数据加载失败
+   */
+  onRequestError = (error) => {
+
   }
 
   render() {
@@ -216,6 +464,10 @@ class ProTableCustom extends PureComponent {
       selectedRowKeys,
       onChange: this.handleSelectRows,
     };
+
+    const expandable = {
+      expandedRowRender: this.expandedRowRender
+    }
 
     return (
       <>
@@ -237,7 +489,12 @@ class ProTableCustom extends PureComponent {
             toolBarRender={this.toolBarRender}
             beforeSearchSubmit={this.beforeSearchSubmit}
             form={this.form}
-            onReset={this.resetFn}           
+            onReset={this.resetFn}
+            expandable={expandable}
+            toolbar={this.toolbar}
+            tableExtraRender={this.tableExtraRender}
+            params={this.params}
+            onRequestError={this.onRequestError}
           />
           {selectedRows?.length > 0 && (
             <FooterToolbar

@@ -1,9 +1,9 @@
 import React, { Component, createRef } from 'react';
 import { connect, history } from 'umi';
-import { Row, Col, Divider, Form, Input, Icon, Button, message,Popconfirm } from 'antd';
+import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
-
+import request from 'umi-request';
 @connect(({ user, global, loading }) => ({
   global,
   user,
@@ -50,11 +50,67 @@ class Welcome extends ProTableCustom {
     {
       title: '描述',
       dataIndex: 'desc',
-      copyable: true,
-      ellipsis: true,
-      tip: '标题过长会自动收缩',
+      copyable: true,//是否支持复制
+      ellipsis: true,//是否自动缩略
+      // valueEnum: { //枚举值显示
+      //   all: {
+      //     text: '全部',
+      //     status: 'Default',
+      //   },
+      //}
+      // valueType:'',//值的显示类型 
+      // | money | 转化值为金额 | ¥10,000.26 |
+      // | date | 日期 | 2019-11-16 |
+      // | dateRange | 日期区间 | 2019-11-16 2019-11-18 |
+      // | dateTime | 日期和时间 | 2019-11-16 12:50:00 |
+      // | dateTimeRange | 日期和时间区间 | 2019-11-16 12:50:00 2019-11-18 12:50:00 |
+      // | time | 时间 | 12:50:00 |
+      // | option | 操作项，会自动增加 marginRight，只支持一个数组,表单中会自动忽略 | `[<a>操作a</a>,<a>操作b</a>]` |
+      // | text | 默认值，不做任何处理 | - |
+      // | select | 选择 | - |
+      // | textarea | 与 text 相同， form 转化时会转为 textarea 组件 | - |
+      // | index | 序号列 | - |
+      // | indexBorder | 带 border 的序号列 | - |
+      // | progress | 进度条 | - |
+      // | digit | [格式化](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)数字展示，form 转化时会转为 inputNumber | - |
+      // | percent | 百分比 | +1.12 |
+      // | code | 代码块 | `const a = b` |
+      // | avatar | 头像 | 展示一个头像 |
+      // | password | 密码框 | 密码相关的展示 |
+      // hideInSearch:true,//在查询表单中不展示此项
+      // hideInTable:true,//在查询表格中不展示此项
+      // hideInForm:true,//在表单中不展示此项
+      // filters:true,表头的筛选菜单项，当值为 true 时，自动使用 valueEnum 生成
+      // order:1, //查询表单中的权重，权重大排序靠前
+      // renderFormItem: (item, { defaultRender, ...rest }, form) => { //渲染查询表单的输入组件
+      //   const status = form.getFieldValue('status');
+
+      //   if (`${status}` === '0') {
+      //     return false;
+      //   }
+
+      //   if (`${status}` === '3') {
+      //     return <Input {...rest} placeholder="请输入异常原因！" />;
+      //   }
+
+      //   return defaultRender(item);
+      // },
+      tooltip: '会在 title 之后展示一个 icon，hover 之后提示一些信息',
       // width: '30%',
-      search: false,
+      // search: false,
+      // search.transform
+    },
+    {
+      title: '时间区间',
+      key: 'dateTimeRange',
+      dataIndex: 'createdAtRange',
+      valueType: 'dateTimeRange',
+      search: {
+        transform: value => ({//转化值的 key, 一般用于事件区间的转化
+          startTime: value[0],
+          endTime: value[1],
+        }),
+      },
     },
     {
       title: '服务调用次数',
@@ -69,25 +125,62 @@ class Welcome extends ProTableCustom {
       dataIndex: 'status',
       // width: 100,
       hideInForm: false,
-      initialValue:'关闭',
-      valueEnum: {
-        0: {
-          text: '关闭',
+      // initialValue: 'all',
+      initialValue: ['all'], //多选
+      // valueType: 'select', // 表单类型和request一起使用
+      // valueType: 'radio', //单选状态
+      // valueType: 'radioButton', //单选按钮状态
+      valueType: 'checkbox',//多选
+      request: async () => [
+        {
+          label: '全部',
+          value: 'all',
           status: 'Default',
         },
-        1: {
-          text: '运行中',
-          status: 'Processing',
-        },
-        2: {
-          text: '已上线',
-          status: 'Success',
-        },
-        3: {
-          text: '异常',
+        {
+          label: '未解决',
+          value: 'error',
           status: 'Error',
         },
-      },
+        {
+          label: '已解决',
+          value: 'close',
+          status: 'Success',
+        },
+        {
+          label: '已上线',
+          value: 'online',
+          status: 'Success',
+        },
+        {
+          label: '解决中',
+          value: 'running',
+          status: 'Processing',
+        },
+
+      ],
+      // valueEnum: {
+      //   all: {
+      //     text: '全部',
+      //     status: 'Default',
+      //   },
+      //   close: {
+      //     text: '关闭',
+      //     status: 'Default',
+      //   },
+      //   running: {
+      //     text: '运行中',
+      //     status: 'Processing',
+      //   },
+      //   online: {
+      //     text: '已上线',
+      //     status: 'Success',
+      //   },
+      //   error: {
+      //     text: '异常',
+      //     status: 'Error',
+      //   },
+      // },
     },
     {
       title: '上次调度时间',
@@ -114,6 +207,7 @@ class Welcome extends ProTableCustom {
       title: '操作',
       dataIndex: 'option',
       valueType: 'option',
+      // fixed: 'right',
       render: (_, record) => (
         <>
           <a
@@ -135,6 +229,15 @@ class Welcome extends ProTableCustom {
               删除
             </a>
           </Popconfirm>
+          <Divider type="vertical" />
+          <a
+            onClick={() => {
+              this.clearSelected();
+            }}
+          >
+            清空选中
+          </a>
+          <Divider type="vertical" />
         </>
       ),
     },
