@@ -22,6 +22,14 @@ class Welcome extends ProTableCustom {
     };
   }
 
+  getApiData = props => {
+    const {
+      user: { data },
+    } = props;
+
+    return data;
+  };
+
 
 
   handleAdd = (value) => {
@@ -37,6 +45,22 @@ class Welcome extends ProTableCustom {
 
   handleDelete = (value) => {
 
+  }
+
+  testData = () => {
+    const { dispatch } = this.props
+
+    dispatch({
+      type: 'user/testData',
+      payload: {
+        current: 1,
+        pageSize: 10
+      },
+    }).then(() => {
+      const data = this.getApiData(this.props);
+      this.reloadData();
+      console.log(data)
+    });
   }
 
   getColumn = () => [
@@ -232,7 +256,7 @@ class Welcome extends ProTableCustom {
           <Divider type="vertical" />
           <a
             onClick={() => {
-              this.clearSelected();
+              this.testData(record)
             }}
           >
             清空选中

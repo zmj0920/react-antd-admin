@@ -488,8 +488,8 @@ export function formatMoney(
     (places ?
       decimal +
       Math.abs(number - toNumber(i))
-      .toFixed(places)
-      .slice(2) :
+        .toFixed(places)
+        .slice(2) :
       '')
   );
 }
@@ -1021,16 +1021,17 @@ export function pretreatmentRemotePageListData(d, listItemHandler) {
 
   if (code === 200) {
     const {
-      list: listData,
-      extra: extraData
+      data:listData,
+      success,
+      total,
+      pageSize,
+      current
     } = d;
-    const {
-      pageNo
-    } = extraData;
-    const list = (listData || []).map((item, index) => {
+  
+    const data = (listData || []).map((item, index) => {
       let o = item;
       if ((o.key || null) == null) {
-        o.key = `${pageNo}-${index}`;
+        o.key = `${current}-${index}`;
       }
 
       if (typeof listItemHandler === 'function') {
@@ -1041,16 +1042,13 @@ export function pretreatmentRemotePageListData(d, listItemHandler) {
 
     v = {
       code,
+      success,
       message: messageText,
-      count: (list || []).length,
-      list,
-      pagination: {
-        total: extraData.total,
-        pageSize: extraData.pageSize,
-        current: parseInt(pageNo || 1, 10) || 1,
-      },
-      extra: extraData,
-      dataSuccess: true,
+      count: (data || []).length,
+      data: data,
+      total: total,
+      pageSize: pageSize,
+      current: current,
     };
   } else {
     v = {
@@ -1536,12 +1534,12 @@ export function getDerivedStateFromPropsForUrlParams(
   } = stateUrlParams;
 
   if (isEqualBySerialize({
-      ...(urlParamsPrev || {}),
-      ...{}
-    }, {
-      ...(urlParams || {}),
-      ...{}
-    })) {
+    ...(urlParamsPrev || {}),
+    ...{}
+  }, {
+    ...(urlParams || {}),
+    ...{}
+  })) {
     return prevState;
   }
 

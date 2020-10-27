@@ -71,6 +71,7 @@ function getRule(req, res) {
     total: tableListDataSource.length,
     pageSize: pageSize,
     current: current,
+    message:""
   };
   return res.json(result);
 }
