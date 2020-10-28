@@ -1,16 +1,32 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'umi';
 import { Row, Col, Divider, Form, Input, Icon, Button, } from 'antd';
-import DrawerFormCustom from '@/customComponents/CustomForm/DrawerFormCustom';
+import StepsFormCustom from '@/customComponents/CustomForm/StepsFormCustom';
 import moment from 'moment';
-import ProForm, { ProFormText, ProFormDateRangePicker, ProFormSelect } from '@ant-design/pro-form';
+import ProForm, {
+  StepsForm,
+  ProFormText,
+  ProFormDatePicker,
+  ProFormSelect,
+  ProFormTextArea,
+  ProFormCheckbox,
+  ProFormDateRangePicker,
+} from '@ant-design/pro-form';
 import style from './Welcome.less';
+
+const waitTime = (time = 100) =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+
 @connect(({ user, global, loading }) => ({
   global,
   user,
   loading: loading.models.user,
 }))
-class Welcome extends DrawerFormCustom {
+class Welcome extends StepsFormCustom {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,54 +56,78 @@ class Welcome extends DrawerFormCustom {
   formContent = () => {
     return (
       <>
-        <ProForm.Group title="基本信息">
+        <StepsForm.StepForm
+          name="base"
+          title="创建实验"
+          onFinish={async () => {
+            await waitTime(2000);
+            return true;
+          }}
+        >
           <ProFormText
-            name="name"
-            label="签约客户名称"
-            tooltip="最长为 24 位"
+            name="name1"
+            label="实验名称"
+            tooltip="最长为 24 位，用于标定的唯一 id"
             placeholder="请输入名称"
+            rules={[{ required: true }]}
           />
-          <ProFormText name="company" label="我方公司名称" placeholder="请输入名称" />
-          <ProFormText name="contract1" label="合同名称" placeholder="请输入名称" />
-          <ProFormDateRangePicker
-            name="contractTime"
-            label="合同生效时间"
-            initialValue={[moment('2020-10-28 08:55:54'), moment('2020-10-28 08:55:54')]}
+          <ProFormDatePicker name="date1" label="日期" />
+          <ProFormDateRangePicker name="dateTime1" label="时间区间" />
+          <ProFormTextArea name="remark3" label="备注" width="l" placeholder="请输入备注" />
+        </StepsForm.StepForm>
+        <StepsForm.StepForm name="checkbox" title="设置参数">
+          <ProFormCheckbox.Group
+            name="checkboxType"
+            label="迁移类型"
+            width="l"
+            options={['结构迁移', '全量迁移', '增量迁移', '全量校验']}
           />
-        </ProForm.Group>
-        <ProForm.Group title="必填信息">
-          <ProFormText name="contract1" label="合同名称" placeholder="请输入名称" />
-          <ProFormDateRangePicker name="contractTime1" label="合同生效时间" />
-        </ProForm.Group>
-        <ProForm.Group title="选填信息">
-          <ProFormSelect
-            options={[
+          <ProForm.Group>
+            <ProFormText name="dbname1" label="业务 DB 用户名" />
+            <ProFormDatePicker name="datetimes" label="记录保存时间" width="s" />
+          </ProForm.Group>
+        </StepsForm.StepForm>
+        <StepsForm.StepForm name="time" title="发布实验">
+          <ProFormCheckbox.Group
+            name="checkbox"
+            label="部署单元"
+            rules={[
               {
-                value: 'chapter',
-                label: '盖章后生效',
+                required: true,
               },
             ]}
-            width="xs"
-            name="useMode"
-            label="合同约定生效方式"
+            options={['部署单元1', '部署单元2', '部署单元3']}
           />
           <ProFormSelect
-            width="xs"
-            options={[
+            label="部署分组策略"
+            name="remark"
+            rules={[
               {
-                value: 'time',
-                label: '履行完终止',
+                required: true,
               },
             ]}
-            name="unusedMode"
-            label="合同约定失效效方式"
+            initialValue="1"
+            options={[
+              {
+                value: '1',
+                label: '策略一',
+              },
+              { value: '2', label: '策略二' },
+            ]}
           />
-        </ProForm.Group>
-        <ProForm.Group title="项目信息">
-          <ProFormText width="s" name="id" label="主合同编号" />
-          <ProFormText name="project" disabled label="项目名称" initialValue="xxxx项目" />
-          <ProFormText width="xs" name="mangerName" disabled label="商务经理" initialValue="启途" />
-        </ProForm.Group>
+          <ProFormSelect
+            label="Pod 调度策略"
+            name="remark2"
+            initialValue="2"
+            options={[
+              {
+                value: '1',
+                label: '策略一',
+              },
+              { value: '2', label: '策略二' },
+            ]}
+          />
+        </StepsForm.StepForm>
       </>
     );
   };
