@@ -209,7 +209,7 @@ class ProTableCustom extends PureComponent {
   /**
    * 表头
    */
-  headerTitle = '高级表格';
+  headerTitle = () => '高级表格';
 
   /**
    * 对request 请求数据进行处理
@@ -467,7 +467,12 @@ class ProTableCustom extends PureComponent {
     // return testData({ ...params })
   };
 
+  /**
+   * 固定表格设置滚动条长度
+   */
   scroll = { x: 1300 };
+
+  renderCustomFormContent = () => null;
 
   render() {
     const {
@@ -495,6 +500,7 @@ class ProTableCustom extends PureComponent {
 
     return (
       <>
+        {this.renderCustomFormContent()}
         <ProTable
           columns={this.getColumn()}
           pagination={this.pagination}
@@ -507,7 +513,24 @@ class ProTableCustom extends PureComponent {
           dataSource={this.dataSource}
           rowKey="key"
           dateFormatter={this.dateFormatter}
-          headerTitle={this.headerTitle}
+          headerTitle={this.headerTitle()}
+          //   headerTitle={
+          //   <Space>
+          //     <span>Basic Table</span>
+          //     <Select
+          //       bordered={false}
+          //       value={intl}
+          //       onChange={value => {
+          //         moment.locale(intlMap[value].locale);
+          //         setIntl(value);
+          //       }}
+          //       options={Object.keys(intlMap).map(value => ({
+          //         value,
+          //         label: value,
+          //       }))}
+          //     />
+          //   </Space>
+          // }
           rowSelection={rowSelection}
           tableAlertOptionRender={this.tableAlertOptionRender}
           toolBarRender={this.toolBarRender}

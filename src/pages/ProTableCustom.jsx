@@ -1,14 +1,12 @@
 import React, { Component, createRef } from 'react';
 import { connect, history } from 'umi';
-import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm, Space } from 'antd';
-import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
 import { testData } from '@/services/user';
 import request from 'umi-request';
 import moment from 'moment';
 import style from './Welcome.less';
-import LightFilterCustomTest from './LightFilterCustomTest';
-import { LightFilter, ProFormDatePicker } from '@ant-design/pro-form';
 @connect(({ user, global, loading }) => ({
   global,
   user,
@@ -131,7 +129,7 @@ class Welcome extends ProTableCustom {
       dataIndex: 'createdAtRange',
       valueType: 'dateTimeRange',
       // hideInForm: true,
-      // initialValue: [moment('2019-11-16 12:50:26'), moment('2019-11-16 12:50:26')],
+      initialValue: [moment('2019-11-16 12:50:26'), moment('2019-11-16 12:50:26')],
       fieldProps: {
         className: `${style.pre}`,
       },
@@ -265,28 +263,6 @@ class Welcome extends ProTableCustom {
       ),
     },
   ];
-
-  // toolBarRender = () => {
-  //   return [
-  //     <Button type="primary" key="newButton" onClick={() => this.onAdd(true)}>
-  //       <PlusOutlined /> 新建
-  //     </Button>,
-  //   ];
-  // };
-
-  headerTitle = () => {
-    return (
-      <Space>
-        高级表格 <LightFilterCustomTest />
-      </Space>
-    );
-  };
-
-  // renderCustomFormContent = () => {
-  //   return (
-  //     <LightFilterCustomTest />
-  //   )
-  // }
 }
 
 export default Welcome;
