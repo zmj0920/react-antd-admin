@@ -12,7 +12,7 @@ import style from './Welcome.less';
   user,
   loading: loading.models.user,
 }))
-class Welcome extends ProTableCustom {
+class ProTableCustomTest extends ProTableCustom {
   constructor(props) {
     super(props);
     this.state = {
@@ -265,4 +265,4 @@ class Welcome extends ProTableCustom {
   ];
 }
 
-export default Welcome;
+export default ProTableCustomTest;

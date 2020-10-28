@@ -266,14 +266,6 @@ class Welcome extends ProTableCustom {
     },
   ];
 
-  // toolBarRender = () => {
-  //   return [
-  //     <Button type="primary" key="newButton" onClick={() => this.onAdd(true)}>
-  //       <PlusOutlined /> 新建
-  //     </Button>,
-  //   ];
-  // };
-
   headerTitle = () => {
     return (
       <Space>

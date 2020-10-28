@@ -13,7 +13,7 @@ import {
   Descriptions,
 } from 'antd';
 import { LightFilter, ProFormDatePicker } from '@ant-design/pro-form';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
+import { PageHeaderWrapper, PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
@@ -106,10 +106,10 @@ class ProTableCustom extends PureComponent {
   };
 
   /* 表单提交 */
-  handleAdd = (value) => {};
+  handleAdd = (value) => { };
 
   /* 修改表单提交 */
-  handleUpdate = (value) => {};
+  handleUpdate = (value) => { };
 
   /**
    * 修改方法获取数据更新
@@ -124,7 +124,7 @@ class ProTableCustom extends PureComponent {
   /**
    * 批量删除
    */
-  handleBatchRemove = (selectedRows) => {};
+  handleBatchRemove = (selectedRows) => { };
 
   /**
    * 自定义批量操作工具栏右侧选项区域, false 时不显示
@@ -457,7 +457,7 @@ class ProTableCustom extends PureComponent {
   /**
    * 数据加载失败
    */
-  onRequestError = (error) => {};
+  onRequestError = (error) => { };
 
   /**
    * 渲染表格请求函数
@@ -472,7 +472,15 @@ class ProTableCustom extends PureComponent {
    */
   scroll = { x: 1300 };
 
+  /**
+   * 扩展表单
+   */
   renderCustomFormContent = () => null;
+
+   /**
+   * 自定义logo
+   */
+  pageHeaderLogo = () => null;
 
   render() {
     const {
@@ -481,6 +489,7 @@ class ProTableCustom extends PureComponent {
       updateFormValues,
       selectedRowKeys,
       selectedRows,
+      pageName,
     } = this.state;
 
     /**
@@ -497,119 +506,129 @@ class ProTableCustom extends PureComponent {
     const expandable = {
       expandedRowRender: this.expandedRowRender,
     };
+   
 
     return (
       <>
-        {this.renderCustomFormContent()}
-        <ProTable
-          columns={this.getColumn()}
-          pagination={this.pagination}
-          search={this.search}
-          options={this.options}
-          actionRef={this.actionRef}
-          // request={(params) => testData({ ...params })}
-          request={(params) => this.getRequest(params)}
-          postData={this.postFn}
-          dataSource={this.dataSource}
-          rowKey="key"
-          dateFormatter={this.dateFormatter}
-          headerTitle={this.headerTitle()}
-          //   headerTitle={
-          //   <Space>
-          //     <span>Basic Table</span>
-          //     <Select
-          //       bordered={false}
-          //       value={intl}
-          //       onChange={value => {
-          //         moment.locale(intlMap[value].locale);
-          //         setIntl(value);
-          //       }}
-          //       options={Object.keys(intlMap).map(value => ({
-          //         value,
-          //         label: value,
-          //       }))}
-          //     />
-          //   </Space>
-          // }
-          rowSelection={rowSelection}
-          tableAlertOptionRender={this.tableAlertOptionRender}
-          toolBarRender={this.toolBarRender}
-          beforeSearchSubmit={this.beforeSearchSubmit}
-          form={this.form}
-          onReset={this.resetFn}
-          expandable={expandable}
-          toolbar={this.toolbar}
-          tableExtraRender={this.tableExtraRender}
-          params={this.params}
-          onRequestError={this.onRequestError}
-          scroll={this.scroll}
-        />
-        {selectedRows?.length > 0 && (
-          <FooterToolbar
-            extra={
-              <div>
-                已选择{' '}
-                <a
-                  style={{
-                    fontWeight: 600,
-                  }}
-                >
-                  {selectedRowKeys.length}
-                </a>{' '}
+        <PageHeaderWrapper
+          title={pageName}
+          avatar={{
+            src: this.pageHeaderLogo()
+              ? ''
+              : 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
+          }}
+        >
+          {this.renderCustomFormContent()}
+          <ProTable
+            columns={this.getColumn()}
+            pagination={this.pagination}
+            search={this.search}
+            options={this.options}
+            actionRef={this.actionRef}
+            // request={(params) => testData({ ...params })}
+            request={(params) => this.getRequest(params)}
+            postData={this.postFn}
+            dataSource={this.dataSource}
+            rowKey="key"
+            dateFormatter={this.dateFormatter}
+            headerTitle={this.headerTitle()}
+            //   headerTitle={
+            //   <Space>
+            //     <span>Basic Table</span>
+            //     <Select
+            //       bordered={false}
+            //       value={intl}
+            //       onChange={value => {
+            //         moment.locale(intlMap[value].locale);
+            //         setIntl(value);
+            //       }}
+            //       options={Object.keys(intlMap).map(value => ({
+            //         value,
+            //         label: value,
+            //       }))}
+            //     />
+            //   </Space>
+            // }
+            rowSelection={rowSelection}
+            tableAlertOptionRender={this.tableAlertOptionRender}
+            toolBarRender={this.toolBarRender}
+            beforeSearchSubmit={this.beforeSearchSubmit}
+            form={this.form}
+            onReset={this.resetFn}
+            expandable={expandable}
+            toolbar={this.toolbar}
+            tableExtraRender={this.tableExtraRender}
+            params={this.params}
+            onRequestError={this.onRequestError}
+            scroll={this.scroll}
+          />
+          {selectedRows?.length > 0 && (
+            <FooterToolbar
+              extra={
+                <div>
+                  已选择{' '}
+                  <a
+                    style={{
+                      fontWeight: 600,
+                    }}
+                  >
+                    {selectedRowKeys.length}
+                  </a>{' '}
                 项&nbsp;&nbsp;
                 <span>
-                  服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
+                    服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
                 </span>
-              </div>
-            }
-          >
-            <Button
-              onClick={() => {
-                this.handleBatchRemove(selectedRows);
-                this.cleanSelectedRows();
-                this.actionRef.current?.reloadAndRest?.();
-              }}
+                </div>
+              }
             >
-              批量删除
+              <Button
+                onClick={() => {
+                  this.handleBatchRemove(selectedRows);
+                  this.cleanSelectedRows();
+                  this.actionRef.current?.reloadAndRest?.();
+                }}
+              >
+                批量删除
             </Button>
-            <Button type="primary">批量审批</Button>
-          </FooterToolbar>
-        )}
-        <CreateForm
-          onCancel={() => this.onAdd(false)}
-          modalVisible={createModalVisible}
-          modalTitle={'新建表单'}
-        >
-          <ProTable
-            onSubmit={(value) => {
-              this.handleAdd(value);
-            }}
-            rowKey="key"
-            type="form"
-            columns={this.getColumn()}
-          />
-        </CreateForm>
-
-        {updateFormValues && Object.keys(updateFormValues).length ? (
-          <UpdateForm
-            onCancel={() => {
-              this.onUpdate(false);
-              this.setUpdateFormValues([]);
-            }}
-            modalTitle={'修改表单'}
-            updateModalVisible={updateModalVisible}
+              <Button type="primary">批量审批</Button>
+            </FooterToolbar>
+          )}
+          <CreateForm
+            onCancel={() => this.onAdd(false)}
+            modalVisible={createModalVisible}
+            modalTitle={'新建表单'}
           >
             <ProTable
               onSubmit={(value) => {
-                this.handleUpdate(value);
+                this.handleAdd(value);
               }}
               rowKey="key"
               type="form"
-              values={updateFormValues}
               columns={this.getColumn()}
             />
-          </UpdateForm>
-        ) : null}
+          </CreateForm>
+
+          {updateFormValues && Object.keys(updateFormValues).length ? (
+            <UpdateForm
+              onCancel={() => {
+                this.onUpdate(false);
+                this.setUpdateFormValues([]);
+              }}
+              modalTitle={'修改表单'}
+              updateModalVisible={updateModalVisible}
+            >
+              <ProTable
+                onSubmit={(value) => {
+                  this.handleUpdate(value);
+                }}
+                rowKey="key"
+                type="form"
+                values={updateFormValues}
+                columns={this.getColumn()}
+              />
+            </UpdateForm>
+          ) : null}
+        </PageHeaderWrapper>
       </>
     );
   }
