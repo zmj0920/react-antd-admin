@@ -1,27 +1,20 @@
 import React, { PureComponent, createRef } from 'react';
-import { message, BackTop, Button } from 'antd';
+import { message, Button } from 'antd';
 import {
-  PageHeaderWrapper,
-  BasicLayout,
   FooterToolbar,
   PageContainer,
 } from '@ant-design/pro-layout';
-import ProForm, {
-  ProFormText,
-  ProFormDateRangePicker,
-  ProFormSelect,
-  LightFilter,
-} from '@ant-design/pro-form';
+import ProForm, { ModalForm } from '@ant-design/pro-form';
 import styles from './index.less';
 import moment from 'moment';
-import ProCard from '@ant-design/pro-card';
+import { PlusOutlined } from '@ant-design/icons';
 const waitTime = (time = 100) =>
   new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
     }, time);
   });
-class LightFilterCustom extends PureComponent {
+class ModalFormCustom extends PureComponent {
   formRef = createRef();
   constructor(props) {
     super(props);
@@ -44,6 +37,7 @@ class LightFilterCustom extends PureComponent {
   // submitter={
   //   render: (_, dom) => <FooterToolbar>{dom}</FooterToolbar>,
   // }
+  
   /**
    * 配置，重置提交按钮
    */
@@ -69,7 +63,7 @@ class LightFilterCustom extends PureComponent {
         >
           重置
         </Button>,
-        <Button id="submit" key="submit" type="primary" onClick={(e) => {}}>
+        <Button id="submit" key="submit" type="primary" onClick={(e) => { }}>
           重置测试
         </Button>,
       ];
@@ -91,34 +85,35 @@ class LightFilterCustom extends PureComponent {
    */
   dateFormatter = 'string';
 
-  onReset = (e) => {
-    console.log(e);
-  };
+  /**
+   * 弹窗按钮自定义
+   */
+  trigger = () => {
+    return (
+      <Button type="primary">
+        <PlusOutlined />
+      新建表单
+      </Button>
+    )
+  }
 
   render() {
     return (
-      <LightFilter
-        style={{
-          marginTop: 8,
-        }}
-        collapse
+      <ModalForm
+        trigger={this.trigger()}
         formRef={this.formRef}
-        // collapseLabel="更多筛选"
         initialValues={{
           name: '签约客户名称',
           company: '我方公司名称',
         }}
-        // submitter={this.submitter}
+        submitter={this.submitter}
         onFinish={this.onFinish}
-        //  onReset={(value)=>{
-        //    console.log(value)
-        //  }}
         dateFormatter={this.dateFormatter}
       >
         {this.formContent()}
-      </LightFilter>
+      </ModalForm>
     );
   }
 }
 
-export default LightFilterCustom;
+export default ModalFormCustom;

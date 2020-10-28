@@ -1,10 +1,7 @@
 import React, { Component, createRef } from 'react';
-import { connect, history } from 'umi';
-import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm } from 'antd';
-import { SettingOutlined,DownOutlined } from '@ant-design/icons';
-import LightFilterCustom from '@/customComponents/CustomForm/LightFilterCustom';
-import { testData } from '@/services/user';
-import request from 'umi-request';
+import { connect } from 'umi';
+import { Row, Col, Divider, Form, Input, Icon, Button, } from 'antd';
+import ModalFormCustom from '@/customComponents/CustomForm/ModalFormCustom';
 import moment from 'moment';
 import ProForm, { ProFormText, ProFormDateRangePicker, ProFormSelect } from '@ant-design/pro-form';
 import style from './Welcome.less';
@@ -13,7 +10,7 @@ import style from './Welcome.less';
   user,
   loading: loading.models.user,
 }))
-class LightFilterCustomTest extends LightFilterCustom {
+class Welcome extends ModalFormCustom {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,12 +36,6 @@ class LightFilterCustomTest extends LightFilterCustom {
       this.reloadData();
     }
   };
-
-  collapse = true
-
-  collapseLabel=()=>{
-    return(<>更多筛选 <DownOutlined/></>)
-  }
 
   formContent = () => {
     return (
@@ -102,4 +93,4 @@ class LightFilterCustomTest extends LightFilterCustom {
   };
 }
 
-export default LightFilterCustomTest;
+export default Welcome;

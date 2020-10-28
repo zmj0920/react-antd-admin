@@ -477,9 +477,9 @@ class ProTableCustom extends PureComponent {
    */
   renderCustomFormContent = () => null;
 
-   /**
-   * 自定义logo
-   */
+  /**
+  * 自定义logo
+  */
   pageHeaderLogo = () => null;
 
   render() {
@@ -506,7 +506,7 @@ class ProTableCustom extends PureComponent {
     const expandable = {
       expandedRowRender: this.expandedRowRender,
     };
-   
+
 
     return (
       <>
@@ -532,23 +532,6 @@ class ProTableCustom extends PureComponent {
             rowKey="key"
             dateFormatter={this.dateFormatter}
             headerTitle={this.headerTitle()}
-            //   headerTitle={
-            //   <Space>
-            //     <span>Basic Table</span>
-            //     <Select
-            //       bordered={false}
-            //       value={intl}
-            //       onChange={value => {
-            //         moment.locale(intlMap[value].locale);
-            //         setIntl(value);
-            //       }}
-            //       options={Object.keys(intlMap).map(value => ({
-            //         value,
-            //         label: value,
-            //       }))}
-            //     />
-            //   </Space>
-            // }
             rowSelection={rowSelection}
             tableAlertOptionRender={this.tableAlertOptionRender}
             toolBarRender={this.toolBarRender}

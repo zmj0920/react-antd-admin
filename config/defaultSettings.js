@@ -4,7 +4,7 @@ const proSettings = {
   primaryColor: '#1890ff',
   layout: 'side',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
   menu: {
@@ -13,5 +13,6 @@ const proSettings = {
   title: 'Ant Design Pro',
   pwa: false,
   iconfontUrl: '',
+  splitMenus: false
 };
 export default proSettings;

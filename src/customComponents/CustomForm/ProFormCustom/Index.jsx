@@ -86,9 +86,7 @@ class ProFormCustom extends PureComponent {
    */
   dateFormatter = 'string';
 
-  onReset = (e) => {
-    console.log(e);
-  };
+  initialValues={}
 
   render() {
     const { pageName } = this.state;
@@ -101,31 +99,17 @@ class ProFormCustom extends PureComponent {
             : 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
         }}
       >
-        {/* <div className={styles.containorBox}> */}
-        <ProCard
-        // title="自定义 Loading"
-        // extra={this.extra}
-        // loading
-        // style={{ marginTop: 16 }}
-        >
+        <ProCard>
           <ProForm
             formRef={this.formRef}
-            initialValues={{
-              name: '签约客户名称',
-              company: '我方公司名称',
-            }}
+            initialValues={this.initialValues}
             submitter={this.submitter}
             onFinish={this.onFinish}
-            //  onReset={(value)=>{
-            //    console.log(value)
-            //  }}
             dateFormatter={this.dateFormatter}
           >
             {this.formContent()}
           </ProForm>
         </ProCard>
-
-        {/* </div> */}
         <BackTop />
       </PageHeaderWrapper>
     );

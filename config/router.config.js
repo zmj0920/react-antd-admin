@@ -1,4 +1,3 @@
-import accessWayCollection from './accessWayCollection';
 export default [
   {
     path: '/user',
