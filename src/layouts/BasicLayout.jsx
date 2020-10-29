@@ -43,12 +43,15 @@ const menuDataRender = (menuList) =>
     return Authorized.check(item.authority, localItem, null);
   });
 
-  const loopMenuItem = (menus) =>
-  menus.map(({ icon, children, ...item }) => ({
-    ...item,
-    icon: icon && IconMap[icon],
-    children: children && loopMenuItem(children),
-  }));
+const loopMenuItem = (menus) =>
+  menus.map(({ icon, children, ...item }) => {
+    const localItem = {
+      ...item,
+      icon: icon && IconMap[icon],
+      children: children && loopMenuItem(children),
+    }
+    return Authorized.check(item.authority, localItem, null);
+  });
 
 const defaultFooterDom = (
   <DefaultFooter
@@ -121,79 +124,79 @@ const BasicLayout = (props) => {
   const { formatMessage } = useIntl();
   return (
     <>
-    <ProLayout
-      logo={logo}
-      formatMessage={formatMessage}
-      onCollapse={handleMenuCollapse}
-      onMenuHeaderClick={() => history.push('/')}
-      menuItemRender={(menuItemProps, defaultDom) => {
-        if (menuItemProps.isUrl || !menuItemProps.path) {
-          return defaultDom;
-        }
+      <ProLayout
+        logo={logo}
+        formatMessage={formatMessage}
+        onCollapse={handleMenuCollapse}
+        onMenuHeaderClick={() => history.push('/')}
+        menuItemRender={(menuItemProps, defaultDom) => {
+          if (menuItemProps.isUrl || !menuItemProps.path) {
+            return defaultDom;
+          }
 
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
-      }}
-      breadcrumbRender={(routers = []) => [
-        {
-          path: '/',
-          breadcrumbName: formatMessage({
-            id: 'menu.home',
-          }),
-        },
-        ...routers,
-      ]}
-      itemRender={(route, params, routes, paths) => {
-        const first = routes.indexOf(route) === 0;
-        return first ? (
-          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-        ) : (
-          <span>{route.breadcrumbName}</span>
-        );
-      }}
-      footerRender={() => defaultFooterDom}
-      menuDataRender={menuDataRender}
-      // menuDataRender={() =>loopMenuItem(menuRouter)}
-      rightContentRender={() => <RightContent />}
-      postMenuData={(menuData) => {
-        menuDataRef.current = menuData || [];
-        return menuData || [];
-      }}     
-      menuFooterRender={(props) => {
-        return (
-          <a
-            style={{
-              lineHeight: '48rpx',
-              display: 'flex',
-              height: 48,
-              color: 'rgba(255, 255, 255, 0.65)',
-              alignItems: 'center',
-            }}
-            href="https://preview.pro.ant.design/dashboard/analysis"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img
-              alt="pro-logo"
-              src="https://procomponents.ant.design/favicon.ico"
+          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        }}
+        breadcrumbRender={(routers = []) => [
+          {
+            path: '/',
+            breadcrumbName: formatMessage({
+              id: 'menu.home',
+            }),
+          },
+          ...routers,
+        ]}
+        itemRender={(route, params, routes, paths) => {
+          const first = routes.indexOf(route) === 0;
+          return first ? (
+            <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+          ) : (
+              <span>{route.breadcrumbName}</span>
+            );
+        }}
+        footerRender={() => defaultFooterDom}
+        menuDataRender={menuDataRender}
+        // menuDataRender={() =>loopMenuItem(menuRouter)}
+        rightContentRender={() => <RightContent />}
+        postMenuData={(menuData) => {
+          menuDataRef.current = menuData || [];
+          return menuData || [];
+        }}
+        menuFooterRender={(props) => {
+          return (
+            <a
               style={{
-                width: 16,
-                height: 16,
-                margin: '0 16px',
-                marginRight: 10,
+                lineHeight: '48rpx',
+                display: 'flex',
+                height: 48,
+                color: 'rgba(255, 255, 255, 0.65)',
+                alignItems: 'center',
               }}
-            />
-            {!props?.collapsed && 'Preview Pro'}
-          </a>
-        );
-      }}
-   
-      {...props}
-      {...settings}
-    >
-      <Authorized authority={authorized.authority} noMatch={noMatch}>
-        {children}
-      </Authorized>
-    </ProLayout>
+              href="https://preview.pro.ant.design/dashboard/analysis"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                alt="pro-logo"
+                src="https://procomponents.ant.design/favicon.ico"
+                style={{
+                  width: 16,
+                  height: 16,
+                  margin: '0 16px',
+                  marginRight: 10,
+                }}
+              />
+              {!props?.collapsed && 'Preview Pro'}
+            </a>
+          );
+        }}
+
+        {...props}
+        {...settings}
+      >
+        <Authorized authority={authorized.authority} noMatch={noMatch}>
+          {children}
+        </Authorized>
+      </ProLayout>
     </>
   );
 };
