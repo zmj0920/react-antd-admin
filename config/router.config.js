@@ -73,12 +73,31 @@ export default [
             ],
           },
           {
-            name: 'list.table-list',
-            icon: 'table',
             path: '/list',
-            component: './ListTableList',
+            icon: 'table',
+            name: 'list',
+            routes: [
+              {
+                name: 'basic-list',
+                icon: 'smile',
+                path: '/list/basic-list',
+                component: './List/basic-list',
+              },
+              {
+                name: 'table-list',
+                icon: 'table',
+                path: '/list/table-list',
+                component: './ListTableList',
+              },
+              // {
+              //   name: 'card-list',
+              //   icon: 'smile',
+              //   path: '/list/card-list',
+              //   component: './list/card-list',
+              // },
+            ],
           },
-         
+
         ],
       },
     ],

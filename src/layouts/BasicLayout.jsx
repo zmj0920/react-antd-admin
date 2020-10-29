@@ -151,8 +151,8 @@ const BasicLayout = (props) => {
         );
       }}
       footerRender={() => defaultFooterDom}
-      // menuDataRender={menuDataRender}
-      menuDataRender={() =>loopMenuItem(menuRouter)}
+      menuDataRender={menuDataRender}
+      // menuDataRender={() =>loopMenuItem(menuRouter)}
       rightContentRender={() => <RightContent />}
       postMenuData={(menuData) => {
         menuDataRef.current = menuData || [];
