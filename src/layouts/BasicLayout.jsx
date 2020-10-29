@@ -12,6 +12,12 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { getMatchMenu } from '@umijs/route-utils';
 import logo from '../assets/logo.svg';
+import { SmileOutlined, HeartOutlined, DashboardOutlined } from '@ant-design/icons';
+const IconMap = {
+  smile: <SmileOutlined />,
+  heart: <HeartOutlined />,
+  dashboard: <DashboardOutlined />,
+};
 const noMatch = (
   <Result
     status={403}
@@ -36,6 +42,13 @@ const menuDataRender = (menuList) =>
     };
     return Authorized.check(item.authority, localItem, null);
   });
+
+  const loopMenuItem = (menus) =>
+  menus.map(({ icon, children, ...item }) => ({
+    ...item,
+    icon: icon && IconMap[icon],
+    children: children && loopMenuItem(children),
+  }));
 
 const defaultFooterDom = (
   <DefaultFooter
@@ -68,18 +81,23 @@ const BasicLayout = (props) => {
     dispatch,
     children,
     settings,
+    menuRouter,
     location = {
       pathname: '/',
     },
   } = props;
+
   const menuDataRef = useRef([]);
-  useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (dispatch) {
+  //     dispatch({
+  //       type: 'user/fetchCurrent',
+  //     });
+  //     dispatch({
+  //       type: 'menu/fetchMenu',
+  //     })
+  //   }
+  // }, []);
   /**
    * init variables
    */
@@ -102,6 +120,7 @@ const BasicLayout = (props) => {
   );
   const { formatMessage } = useIntl();
   return (
+    <>
     <ProLayout
       logo={logo}
       formatMessage={formatMessage}
@@ -132,12 +151,42 @@ const BasicLayout = (props) => {
         );
       }}
       footerRender={() => defaultFooterDom}
-      menuDataRender={menuDataRender}
+      // menuDataRender={menuDataRender}
+      menuDataRender={() =>loopMenuItem(menuRouter)}
       rightContentRender={() => <RightContent />}
       postMenuData={(menuData) => {
         menuDataRef.current = menuData || [];
         return menuData || [];
+      }}     
+      menuFooterRender={(props) => {
+        return (
+          <a
+            style={{
+              lineHeight: '48rpx',
+              display: 'flex',
+              height: 48,
+              color: 'rgba(255, 255, 255, 0.65)',
+              alignItems: 'center',
+            }}
+            href="https://preview.pro.ant.design/dashboard/analysis"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              alt="pro-logo"
+              src="https://procomponents.ant.design/favicon.ico"
+              style={{
+                width: 16,
+                height: 16,
+                margin: '0 16px',
+                marginRight: 10,
+              }}
+            />
+            {!props?.collapsed && 'Preview Pro'}
+          </a>
+        );
       }}
+   
       {...props}
       {...settings}
     >
@@ -145,10 +194,12 @@ const BasicLayout = (props) => {
         {children}
       </Authorized>
     </ProLayout>
+    </>
   );
 };
 
-export default connect(({ global, settings }) => ({
+export default connect(({ global, settings, menu }) => ({
   collapsed: global.collapsed,
   settings,
+  menuRouter: menu.menuRouter,
 }))(BasicLayout);
