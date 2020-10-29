@@ -30,7 +30,6 @@ export default [
             path: '/',
             redirect: '/dashboard/analysis',
           },
-
           {
             path: '/welcome',
             name: 'welcome',
@@ -89,15 +88,14 @@ export default [
                 path: '/list/table-list',
                 component: './ListTableList',
               },
-              // {
-              //   name: 'card-list',
-              //   icon: 'smile',
-              //   path: '/list/card-list',
-              //   component: './list/card-list',
-              // },
             ],
           },
-
+          {
+            name: 'modalfrom',
+            icon: 'smile',
+            path: '/modalfrom',
+            component: './ModalFrom',
+          },
         ],
       },
     ],

@@ -7,7 +7,7 @@ import { testData } from '@/services/user';
 import request from 'umi-request';
 import moment from 'moment';
 import style from './Welcome.less';
-import LightFilterCustomTest from './LightFilterCustomTest';
+import LightFilterCustomTest from './ModalFrom/LightFilterCustomTest';
 import { LightFilter, ProFormDatePicker } from '@ant-design/pro-form';
 @connect(({ user, global, loading }) => ({
   global,

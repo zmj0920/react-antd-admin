@@ -1,31 +1,27 @@
 import { getMenuData } from '@/services/menu';
 
-const MenuModel = {
-    namespace: 'menu',
-  
-    state: {
-      menuRouter: [],
+const MenuModelType = {
+  namespace: 'menu',
+  state: {
+    menuData: [],
+  },
+
+  effects: {
+    *fetchMenu(_, { call, put }) {
+      const response = yield call(getMenuData);
+      yield put({
+        type: 'saveMenuData',
+        payload: response.data,
+      });
     },
-  
-    effects: {
-      *fetchMenu(_, { call, put }) {
-        const response = yield call(getMenuData);
-        yield put({
-          type: 'saveMenuData',
-          payload: response.data,
-        });
-      },
+  },
+  reducers: {
+    saveMenuData(state, action) {
+      return {
+        ...state,
+        menuData: action.payload || [],
+      };
     },
-  
-    reducers: {
-      saveMenuData(state, { payload }) {
-       
-        return {
-          ...state,
-          menuRouter: payload,
-        };
-      },
-    },
-  };
-  
-  export default MenuModel;
+  },
+};
+export default MenuModelType;

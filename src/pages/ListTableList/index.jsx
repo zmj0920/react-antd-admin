@@ -1,14 +1,27 @@
 import React, { Component, createRef } from 'react';
 import { connect, history } from 'umi';
-import { Row, Col, Divider, Form, Input, Icon, Button, message, Popconfirm, Space } from 'antd';
+import {
+  Row,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Icon,
+  Button,
+  message,
+  Popconfirm,
+  Space,
+  Card,
+  Descriptions,
+} from 'antd';
 import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
 import ProTableCustom from '@/customComponents/ProTableCustom';
 import { testData } from '@/services/user';
 import request from 'umi-request';
 import moment from 'moment';
 import style from '@/pages/Welcome.less';
-import LightFilterCustomTest from '@/pages/LightFilterCustomTest';
-import { LightFilter, ProFormDatePicker } from '@ant-design/pro-form';
+import LightFilterCustomTest from '@/pages/ModalFrom/LightFilterCustomTest';
+import ProCard from '@ant-design/pro-card';
 @connect(({ user, global, loading }) => ({
   global,
   user,
@@ -48,11 +61,29 @@ class Index extends ProTableCustom {
     return testData({ ...params });
   };
 
+  tableExtraRender = (_, data) => {
+    return (
+      <>
+        <ProCard>
+          <Descriptions size="small" column={3}>
+            <Descriptions.Item label="Row">{data.length}</Descriptions.Item>
+            <Descriptions.Item label="Created">Lili Qu</Descriptions.Item>
+            <Descriptions.Item label="Association">
+              <a>421421</a>
+            </Descriptions.Item>
+            <Descriptions.Item label="Creation Time">2017-01-10</Descriptions.Item>
+            <Descriptions.Item label="Effective Time">2017-10-10</Descriptions.Item>
+          </Descriptions>
+        </ProCard>
+      </>
+    );
+  };
+
   getColumn = () => [
     {
       title: '编号',
       dataIndex: 'id',
-      width: 80,
+      width: 60,
       align: 'center',
       hideInForm: true,
       // children: [
@@ -160,11 +191,11 @@ class Index extends ProTableCustom {
       // width: 100,
       hideInForm: false,
       //  initialValue: 'all',
-      initialValue: ['all'], //多选
+      initialValue: 'all', //多选
       //  valueType: 'select', // 表单类型和request一起使用
       // valueType: 'radio', //单选状态
       // valueType: 'radioButton', //单选按钮状态
-      valueType: 'checkbox', //多选
+      // valueType: 'checkbox', //多选
       request: async () => [
         {
           label: '全部',

@@ -12,8 +12,7 @@ import ProForm, {
   ProFormCheckbox,
   ProFormDateRangePicker,
 } from '@ant-design/pro-form';
-import style from './Welcome.less';
-
+import { PlusOutlined } from '@ant-design/icons';
 const waitTime = (time = 100) =>
   new Promise((resolve) => {
     setTimeout(() => {
@@ -26,7 +25,7 @@ const waitTime = (time = 100) =>
   user,
   loading: loading.models.user,
 }))
-class Welcome extends ModalStepsFormCustom {
+class ModalStepsFormCustomTest extends ModalStepsFormCustom {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,6 +50,15 @@ class Welcome extends ModalStepsFormCustom {
     if (value) {
       this.reloadData();
     }
+  };
+
+  stepsFormButton = () => {
+    return (
+      <Button type="primary" onClick={() => this.setVisible(true)}>
+        <PlusOutlined />
+        分布表单新建1
+      </Button>
+    );
   };
 
   formContent = () => {
@@ -133,4 +141,4 @@ class Welcome extends ModalStepsFormCustom {
   };
 }
 
-export default Welcome;
+export default ModalStepsFormCustomTest;

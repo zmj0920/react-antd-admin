@@ -1,7 +1,8 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'umi';
 import { Row, Col, Divider, Form, Input, Icon, Button } from 'antd';
-import ModalStepsFormCustom from '@/customComponents/CustomForm/ModalStepsFormCustom';
+import StepsFormCustom from '@/customComponents/CustomForm/StepsFormCustom';
+import { PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import ProForm, {
   StepsForm,
@@ -26,7 +27,7 @@ const waitTime = (time = 100) =>
   user,
   loading: loading.models.user,
 }))
-class Welcome extends ModalStepsFormCustom {
+class Welcome extends StepsFormCustom {
   constructor(props) {
     super(props);
     this.state = {

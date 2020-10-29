@@ -17,9 +17,7 @@ import { PageHeaderWrapper, PageContainer, FooterToolbar } from '@ant-design/pro
 import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import { testData } from '@/services/user';
-import style from './index.less';
-// import request from 'umi-request';
+import ProCard from '@ant-design/pro-card';
 class ProTableCustom extends PureComponent {
   actionRef = createRef();
   constructor(props) {
@@ -106,10 +104,10 @@ class ProTableCustom extends PureComponent {
   };
 
   /* 表单提交 */
-  handleAdd = (value) => { };
+  handleAdd = (value) => {};
 
   /* 修改表单提交 */
-  handleUpdate = (value) => { };
+  handleUpdate = (value) => {};
 
   /**
    * 修改方法获取数据更新
@@ -124,7 +122,7 @@ class ProTableCustom extends PureComponent {
   /**
    * 批量删除
    */
-  handleBatchRemove = (selectedRows) => { };
+  handleBatchRemove = (selectedRows) => {};
 
   /**
    * 自定义批量操作工具栏右侧选项区域, false 时不显示
@@ -434,7 +432,7 @@ class ProTableCustom extends PureComponent {
     return null;
     // return (
     //   <>
-    //     <Card>
+    //     <ProCard>
     //       <Descriptions size="small" column={3}>
     //         <Descriptions.Item label="Row">{data.length}</Descriptions.Item>
     //         <Descriptions.Item label="Created">Lili Qu</Descriptions.Item>
@@ -444,7 +442,7 @@ class ProTableCustom extends PureComponent {
     //         <Descriptions.Item label="Creation Time">2017-01-10</Descriptions.Item>
     //         <Descriptions.Item label="Effective Time">2017-10-10</Descriptions.Item>
     //       </Descriptions>
-    //     </Card>
+    //     </ProCard>
     //   </>
     // )
   };
@@ -457,7 +455,7 @@ class ProTableCustom extends PureComponent {
   /**
    * 数据加载失败
    */
-  onRequestError = (error) => { };
+  onRequestError = (error) => {};
 
   /**
    * 渲染表格请求函数
@@ -478,8 +476,8 @@ class ProTableCustom extends PureComponent {
   renderCustomFormContent = () => null;
 
   /**
-  * 自定义logo
-  */
+   * 自定义logo
+   */
   pageHeaderLogo = () => null;
 
   render() {
@@ -506,7 +504,6 @@ class ProTableCustom extends PureComponent {
     const expandable = {
       expandedRowRender: this.expandedRowRender,
     };
-
 
     return (
       <>
@@ -557,10 +554,10 @@ class ProTableCustom extends PureComponent {
                   >
                     {selectedRowKeys.length}
                   </a>{' '}
-                项&nbsp;&nbsp;
-                <span>
+                  项&nbsp;&nbsp;
+                  <span>
                     服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
-                </span>
+                  </span>
                 </div>
               }
             >
@@ -572,7 +569,7 @@ class ProTableCustom extends PureComponent {
                 }}
               >
                 批量删除
-            </Button>
+              </Button>
               <Button type="primary">批量审批</Button>
             </FooterToolbar>
           )}
