@@ -63,13 +63,33 @@ export default defineConfig({
           minChunks: 3,
           automaticNameDelimiter: '.',
           cacheGroups: {
-            vendor: {
-              name: 'vendors',
-              test({ resource }) {
-                return /[\\/]node_modules[\\/]/.test(resource);
-              },
-              priority: 10,
+            // 组件库相关
+            react: {
+              name: "react",
+              chunks: "all",
+              test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|moment|antd|@ant-design)[\\/]/,
+              priority: 12
             },
+            // 工具库相关
+            utils: {
+              name: "utils",
+              chunks: "all",
+              test: /[\\/]node_modules[\\/](lodash|ramda)[\\/]/,
+              priority: 11
+            },
+            // 图表库相关
+            charts: {
+              name: "charts",
+              chunks: "all",
+              test: /[\\/]node_modules[\\/](echarts|bizcharts|@antv)[\\/]/,
+              priority: 11
+            },
+            vendors: {
+              name: "vendors",
+              chunks: "all",
+              test: /[\\/]node_modules[\\/]/,
+              priority: 10
+            }
           },
         },
       }
@@ -96,7 +116,7 @@ export default defineConfig({
     react: 'React',
     'react-dom': 'ReactDOM',
     bizcharts: 'BizCharts',
-    'data-set':'DataSet'
+    'data-set': 'DataSet'
   },
   devtool: false,
   scripts: [
@@ -107,30 +127,6 @@ export default defineConfig({
   ],
   pwa: false,
   proxy: proxy[REACT_APP_ENV || 'dev'],
-  cssLoader: {
-    // 这里的 modules 可以接受 getLocalIdent
-    modules: {
-      getLocalIdent: (context, _, localName) => {
-        if (
-          context.resourcePath.includes('node_modules') ||
-          context.resourcePath.includes('ant.design.pro.less') ||
-          context.resourcePath.includes('global.less')
-        ) {
-          return localName;
-        }
-        const match = context.resourcePath.match(/src(.*)/);
-        if (match && match[1]) {
-          const antdProPath = match[1].replace('.less', '');
-          const arr = winPath(antdProPath)
-            .split('/')
-            .map(a => a.replace(/([A-Z])/g, '-$1'))
-            .map(a => a.toLowerCase());
-          return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
-        }
-        return localName;
-      },
-    },
-  },
   manifest: {
     basePath: '/',
   },
