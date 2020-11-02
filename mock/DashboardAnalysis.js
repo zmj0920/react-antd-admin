@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { AnalysisData, RadarData, VisitDataType } from './data.d';
+// import { AnalysisData, RadarData, VisitDataType } from './data.d';
 
 // mock data
-const visitData: VisitDataType[] = [];
+const visitData = [];
 const beginDay = new Date().getTime();
 
 const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5];
@@ -159,7 +159,7 @@ const radarOriginData = [
   },
 ];
 
-const radarData: RadarData[] = [];
+const radarData = [];
 const radarTitleMap = {
   ref: '引用',
   koubei: '口碑',
@@ -179,7 +179,7 @@ radarOriginData.forEach((item) => {
   });
 });
 
-const getFakeChartData: AnalysisData = {
+const getFakeChartData = {
   visitData,
   visitData2,
   salesData,

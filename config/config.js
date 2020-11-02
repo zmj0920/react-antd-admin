@@ -4,10 +4,10 @@ import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import pageRoutes from './router.config';
 const { REACT_APP_ENV } = process.env;
-const path = require("path");
-// const CompressionWebpackPlugin = require("compression-webpack-plugin");
-const isEnvProduction = process.env.NODE_ENV === "production";
-const assetDir = "static";
+const path = require('path');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const isEnvProduction = process.env.NODE_ENV === 'production';
+const assetDir = 'static';
 export default defineConfig({
   // hash: false,
   history: { type: 'hash' },
@@ -52,21 +52,14 @@ export default defineConfig({
     logLevel: 'info',
     defaultSizes: 'gzip', // stat  // gzip
   },
-  chunks: ['react', 'utils', 'charts', 'vendors', 'umi'],
-  // 生产环境去除console日志打印
-  terserOptions: {
-    compress: {
-      drop_console: isEnvProduction,
-    },
-  },
+  chunks: ['vendors', 'umi'],
   chainWebpack(memo, { env, webpack, createCSSRule }) {
-
     // 修改js，js chunk文件输出目录
     memo.output
       .filename(assetDir + '/js/[name].js')
-      .chunkFilename(assetDir + '/js/[name].chunk.js')
+      .chunkFilename(assetDir + '/js/[name].chunk.js');
     // 修改css输出目录
-    memo.plugin("extract-css").tap(() => [
+    memo.plugin('extract-css').tap(() => [
       {
         filename: `${assetDir}/css/[name].css`,
         chunkFilename: `${assetDir}/css/[name].chunk.css`,
@@ -75,18 +68,18 @@ export default defineConfig({
     ]);
     // 修改图片输出目录
     memo.module
-      .rule("images")
+      .rule('images')
       .test(/\.(png|jpe?g|gif|webp|ico)(\?.*)?$/)
-      .use("url-loader")
-      .loader(require.resolve("url-loader"))
+      .use('url-loader')
+      .loader(require.resolve('url-loader'))
       .tap((options) => {
         const newOptions = {
           ...options,
-          name: assetDir + "/img/[name].[ext]",
+          name: assetDir + '/img/[name].[ext]',
           fallback: {
             ...options.fallback,
             options: {
-              name: assetDir + "/img/[name].[ext]",
+              name: assetDir + '/img/[name].[ext]',
               esModule: false,
             },
           },
@@ -96,32 +89,44 @@ export default defineConfig({
 
     // 修改svg输出目录
     memo.module
-      .rule("svg")
+      .rule('svg')
       .test(/\.(svg)(\?.*)?$/)
-      .use("file-loader")
-      .loader(require.resolve("file-loader"))
+      .use('file-loader')
+      .loader(require.resolve('file-loader'))
       .tap((options) => ({
         ...options,
-        name: assetDir + "/img/[name].[ext]",
+        name: assetDir + '/img/[name].[ext]',
       }));
 
     // 修改fonts输出目录
     memo.module
-      .rule("fonts")
+      .rule('fonts')
       .test(/\.(eot|woff|woff2|ttf)(\?.*)?$/)
-      .use("file-loader")
-      .loader(require.resolve("file-loader"))
+      .use('file-loader')
+      .loader(require.resolve('file-loader'))
       .tap((options) => ({
         ...options,
-        name: assetDir + "/fonts/[name].[ext]",
+        name: assetDir + '/fonts/[name].[ext]',
         fallback: {
           ...options.fallback,
           options: {
-            name: assetDir + "/fonts/[name].[ext]",
+            name: assetDir + '/fonts/[name].[ext]',
             esModule: false,
           },
         },
       }));
+    // 添加gzip压缩
+    memo.when(isEnvProduction, (config) => {
+      config.plugin('compression-webpack-plugin').use(CompressionWebpackPlugin, [
+        {
+          filename: '[path].gz[query]',
+          algorithm: 'gzip',
+          test: new RegExp('\\.(js|css)$'),
+          threshold: 10240,
+          minRatio: 0.8,
+        },
+      ]);
+    });
     memo.merge({
       optimization: {
         minimize: true,
@@ -160,17 +165,17 @@ export default defineConfig({
             },
           },
         },
-      }
+      },
     });
   },
   metas: [
     {
       name: 'keywords',
-      content: 'umi1, umijs1'
+      content: 'umi1, umijs1',
     },
     {
       name: 'description',
-      content: '🍙 插件化的企业级前端应用框架。'
+      content: '🍙 插件化的企业级前端应用框架。',
     },
     {
       bar: 'foo',
@@ -184,14 +189,13 @@ export default defineConfig({
     react: 'React',
     'react-dom': 'ReactDOM',
     bizcharts: 'BizCharts',
-    'data-set': 'DataSet'
+    'data-set': 'DataSet',
   },
   devtool: false,
   scripts: [
     'https://unpkg.com/react@16.8.6/umd/react.production.min.js',
     'https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js',
     'https://unpkg.com/bizcharts@3.5.5/umd/BizCharts.min.js',
-    ''
   ],
   pwa: false,
   proxy: proxy[REACT_APP_ENV || 'dev'],
