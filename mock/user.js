@@ -1,6 +1,4 @@
-import {
-  parse
-} from 'url';
+import { parse } from 'url';
 
 function getFakeCaptcha(req, res) {
   return res.json('captcha-xxx');
@@ -30,7 +28,7 @@ const genList = (pageNo, pageSize) => {
       owner: '曲丽丽',
       desc: '这是一段描述',
       callNo: Math.floor(Math.random() * 1000),
-      status: valueEnum[Math.floor(Math.random() * 10) % 4],
+      status: (Math.floor(Math.random() * 10) % 2).toString(),
       updatedAt: new Date(),
       createdAt: new Date(),
       createdAtRange: [
@@ -48,10 +46,7 @@ const genList = (pageNo, pageSize) => {
 let tableListDataSource = genList(1, 100);
 
 function getRule(req, res) {
-  const {
-    current,
-    pageSize
-  } = req.body;
+  const { current, pageSize } = req.body;
   let dataSource = [...tableListDataSource].slice((current - 1) * pageSize, current * pageSize);
   // const result = {
   //   code: 200,
@@ -71,7 +66,7 @@ function getRule(req, res) {
     total: tableListDataSource.length,
     pageSize: pageSize,
     current: current,
-    message:""
+    message: '',
   };
   return res.json(result);
 }
@@ -86,7 +81,8 @@ export default {
     signature: '海纳百川，有容乃大',
     title: '交互专家',
     group: '蚂蚁集团－某某某事业群－某某平台部－某某技术部－UED',
-    tags: [{
+    tags: [
+      {
         key: '0',
         label: '很有想法的',
       },
@@ -128,7 +124,8 @@ export default {
     phone: '0752-268888888',
   },
   // GET POST 可省略
-  'GET /api/users': [{
+  'GET /api/users': [
+    {
       key: '1',
       name: 'John Brown',
       age: 32,
@@ -148,11 +145,7 @@ export default {
     },
   ],
   'POST /api/login/account': (req, res) => {
-    const {
-      password,
-      userName,
-      type
-    } = req.body;
+    const { password, userName, type } = req.body;
 
     if (password === 'admin' && userName === 'admin') {
       res.send({
@@ -231,7 +224,7 @@ export default {
   },
   'GET  /api/login/captcha': getFakeCaptcha,
 
-  'POST /api/test': getRule
+  'POST /api/test': getRule,
   //  (req, res) => {
 
   //   const {
@@ -411,7 +404,6 @@ export default {
   //       },
   //     ]
   //   });
-
 
   // }
 };

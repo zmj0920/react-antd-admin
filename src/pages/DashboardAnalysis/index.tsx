@@ -7,7 +7,7 @@ import { RangePickerProps } from 'antd/es/date-picker/generatePicker';
 import moment from 'moment';
 import { connect, Dispatch } from 'umi';
 
-import PageLoading from './components/PageLoading';
+import { PageLoading } from '@ant-design/pro-layout';
 import { getTimeDistance } from './utils/utils';
 import { AnalysisData } from './data.d';
 import styles from './style.less';
@@ -32,10 +32,7 @@ interface DashboardAnalysisState {
   rangePickerValue: RangePickerValue;
 }
 
-class DashboardAnalysis extends Component<
-  DashboardAnalysisProps,
-  DashboardAnalysisState
-> {
+class DashboardAnalysis extends Component<DashboardAnalysisProps, DashboardAnalysisState> {
   state: DashboardAnalysisState = {
     salesType: 'all',
     currentTabKey: '',

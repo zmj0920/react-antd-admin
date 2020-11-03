@@ -190,61 +190,45 @@ class Index extends ProTableCustom {
       align: 'center',
       // width: 100,
       hideInForm: false,
-      //  initialValue: 'all',
-      initialValue: 'all', //多选
-      //  valueType: 'select', // 表单类型和request一起使用
+      initialValue: ['1', '2'],
+      // initialValue: 0, //多选
+      // valueType: 'select', // 表单类型和request一起使用
       // valueType: 'radio', //单选状态
       // valueType: 'radioButton', //单选按钮状态
-      // valueType: 'checkbox', //多选
+      valueType: 'checkbox', //多选
+      // valueEnum: {
+      //   0: { text: '关闭', status: 'Default' },
+      //   1: { text: '运行中', status: 'Processing' },
+      //   2: { text: '已上线', status: 'Success' },
+      //   3: { text: '异常', status: 'Error' },
+      // },
       request: async () => [
         {
           label: '全部',
-          value: 'all',
+          value: '0',
           status: 'Default',
         },
         {
           label: '未解决',
-          value: 'error',
+          value: '1',
           status: 'Error',
         },
         {
           label: '已解决',
-          value: 'close',
+          value: '2',
           status: 'Success',
         },
         {
           label: '已上线',
-          value: 'online',
+          value: '3',
           status: 'Success',
         },
         {
           label: '解决中',
-          value: 'running',
+          value: '4',
           status: 'Processing',
         },
       ],
-      // valueEnum: {
-      //   all: {
-      //     text: '全部',
-      //     status: 'Default',
-      //   },
-      //   close: {
-      //     text: '关闭',
-      //     status: 'Default',
-      //   },
-      //   running: {
-      //     text: '运行中',
-      //     status: 'Processing',
-      //   },
-      //   online: {
-      //     text: '已上线',
-      //     status: 'Success',
-      //   },
-      //   error: {
-      //     text: '异常',
-      //     status: 'Error',
-      //   },
-      // },
     },
     {
       title: '上次调度时间',
