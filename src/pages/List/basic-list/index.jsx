@@ -17,7 +17,7 @@ import {
 
 import { findDOMNode } from 'react-dom';
 import { PageContainer } from '@ant-design/pro-layout';
-import { connect, Dispatch } from 'umi';
+import { connect } from 'umi';
 import moment from 'moment';
 import OperationModal from './components/OperationModal';
 import styles from './style.less';
