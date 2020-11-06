@@ -34,6 +34,9 @@ class Index extends ProTableCustom {
       ...this.state,
       ...{
         dataLoading: false,
+        showSelect: true,
+        // showExpandedRowRender:true
+        tableScroll: { x: 1300 },
       },
     };
   }
@@ -53,7 +56,7 @@ class Index extends ProTableCustom {
     }
   };
 
-  handleBatchRemove = (selectedRows) => {};
+  // handleBatchRemove = (selectedRows) => {};
 
   handleDelete = (value) => {};
 
@@ -78,6 +81,8 @@ class Index extends ProTableCustom {
       </>
     );
   };
+
+  params = { age: 20 };
 
   getColumn = () => [
     {

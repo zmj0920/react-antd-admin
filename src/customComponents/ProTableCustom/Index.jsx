@@ -71,7 +71,8 @@ class ProTableCustom extends PureComponent {
    * @param {选择的行数据*} selectedRows
    */
   handleSelectRows = (selectedRowKeys, selectedRows) => {
-    console.log(selectedRowKeys);
+    // console.log(selectedRowKeys);
+
     this.setState({
       selectedRows: selectedRows,
       selectedRowKeys,
@@ -122,7 +123,11 @@ class ProTableCustom extends PureComponent {
   /**
    * 批量删除
    */
-  handleBatchRemove = (selectedRows) => {};
+  handleBatchDelete = (selectedRowKeys, selectedRows) => {
+    console.log(selectedRowKeys);
+    this.cleanSelectedRows();
+    this.actionRef.current?.reloadAndRest?.();
+  };
 
   /**
    * 自定义批量操作工具栏右侧选项区域, false 时不显示
@@ -310,55 +315,50 @@ class ProTableCustom extends PureComponent {
   /**
    * 表格嵌套
    */
-  // expandedRowRender = () => {
-  //   const data = [];
-  //   for (let i = 0; i < 3; i += 1) {
-  //     data.push({
-  //       key: i,
-  //       date: '2014-12-24 23:12:00',
-  //       name: 'This is production name',
-  //       upgradeNum: 'Upgraded: 56',
-  //     });
-  //   }
-  //   return (
-  //     <ProTable
-  //       columns={[
-  //         {
-  //           title: 'Date',
-  //           dataIndex: 'date',
-  //           key: 'date',
-  //         },
-  //         {
-  //           title: 'Name',
-  //           dataIndex: 'name',
-  //           key: 'name',
-  //         },
-  //         {
-  //           title: 'Upgrade Status',
-  //           dataIndex: 'upgradeNum',
-  //           key: 'upgradeNum',
-  //         },
-  //         {
-  //           title: 'Action',
-  //           dataIndex: 'operation',
-  //           key: 'operation',
-  //           valueType: 'option',
-  //           render: () => [<a key="Pause">Pause</a>, <a key="Stop">Stop</a>],
-  //         },
-  //       ]}
-  //       headerTitle={false}
-  //       search={false}
-  //       options={false}
-  //       dataSource={data}
-  //       pagination={false}
-  //     />
-  //   );
-  // };
-
-  /**
-   * 关闭表格嵌套
-   */
-  expandedRowRender = false;
+  expandedRowRender = () => {
+    const data = [];
+    for (let i = 0; i < 3; i += 1) {
+      data.push({
+        key: i,
+        date: '2014-12-24 23:12:00',
+        name: 'This is production name',
+        upgradeNum: 'Upgraded: 56',
+      });
+    }
+    return (
+      <ProTable
+        columns={[
+          {
+            title: 'Date',
+            dataIndex: 'date',
+            key: 'date',
+          },
+          {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+          },
+          {
+            title: 'Upgrade Status',
+            dataIndex: 'upgradeNum',
+            key: 'upgradeNum',
+          },
+          {
+            title: 'Action',
+            dataIndex: 'operation',
+            key: 'operation',
+            valueType: 'option',
+            render: () => [<a key="Pause">Pause</a>, <a key="Stop">Stop</a>],
+          },
+        ]}
+        headerTitle={false}
+        search={false}
+        options={false}
+        dataSource={data}
+        pagination={false}
+      />
+    );
+  };
 
   renderBadge = (count) => (
     <Badge
@@ -466,11 +466,6 @@ class ProTableCustom extends PureComponent {
   };
 
   /**
-   * 固定表格设置滚动条长度
-   */
-  scroll = { x: 1300 };
-
-  /**
    * 扩展表单
    */
   renderCustomFormContent = () => null;
@@ -480,29 +475,101 @@ class ProTableCustom extends PureComponent {
    */
   pageHeaderLogo = () => null;
 
+  /**
+   * 批量操作
+   */
+  footerToolbar = () => {
+    const { selectedRowKeys, selectedRows } = this.state;
+    return (
+      selectedRows?.length > 0 && (
+        <FooterToolbar
+          extra={
+            <div>
+              已选择{' '}
+              <a
+                style={{
+                  fontWeight: 600,
+                }}
+              >
+                {selectedRowKeys.length}
+              </a>{' '}
+              项&nbsp;&nbsp;
+              <span>
+                服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
+              </span>
+            </div>
+          }
+        >
+          <Button
+            key="handleBatchDelete"
+            onClick={() => {
+              this.handleBatchDelete(selectedRowKeys, selectedRows);
+            }}
+          >
+            批量删除
+          </Button>
+          <Button type="primary">批量审批</Button>
+        </FooterToolbar>
+      )
+    );
+  };
+
   render() {
     const {
       createModalVisible,
       updateModalVisible,
       updateFormValues,
       selectedRowKeys,
-      selectedRows,
       pageName,
+      showSelect: showSelectOption,
+      showExpandedRowRender: showExpandedRowRenderOption,
+      tableScroll, // 固定表格设置滚动条长度
+      rowKey,
     } = this.state;
 
-    /**
-     * 多选配置
-     */
-    const rowSelection = {
-      selectedRowKeys,
-      onChange: this.handleSelectRows,
-    };
+    const showSelect = showSelectOption || false;
 
     /**
-     * 嵌套表格
+     * 多选配置 state  showSelect 配置true显示默认隐藏
      */
-    const expandable = {
-      expandedRowRender: this.expandedRowRender,
+    const rowSelection = !showSelect
+      ? false
+      : {
+          selectedRowKeys,
+          onChange: this.handleSelectRows,
+        };
+
+    const showExpandedRowRender = showExpandedRowRenderOption || false;
+
+    /**
+     * 嵌套表格state  showExpandedRowRender 配置true显示默认隐藏
+     */
+    const expandable = !showExpandedRowRender
+      ? false
+      : {
+          expandedRowRender: this.expandedRowRender,
+        };
+
+    /**
+     * 扩展配置
+     */
+    const standardTableCustomOption = {
+      scroll: tableScroll,
+      pagination: this.pagination,
+      search: this.search,
+      options: this.options,
+      postData: this.postFn,
+      dataSource: this.dataSource,
+      dateFormatter: this.dateFormatter,
+      tableAlertOptionRender: this.tableAlertOptionRender,
+      toolBarRender: this.toolBarRender,
+      beforeSearchSubmit: this.beforeSearchSubmit,
+      form: this.form,
+      onReset: this.resetFn,
+      toolbar: this.toolbar,
+      tableExtraRender: this.tableExtraRender,
+      params: this.params,
+      onRequestError: this.onRequestError,
     };
 
     return (
@@ -517,62 +584,15 @@ class ProTableCustom extends PureComponent {
         >
           {this.renderCustomFormContent()}
           <ProTable
+            {...standardTableCustomOption}
             columns={this.getColumn()}
-            pagination={this.pagination}
-            search={this.search}
-            options={this.options}
-            actionRef={this.actionRef}
-            // request={(params) => testData({ ...params })}
             request={(params) => this.getRequest(params)}
-            postData={this.postFn}
-            dataSource={this.dataSource}
-            rowKey="key"
-            dateFormatter={this.dateFormatter}
+            rowKey={rowKey || 'key'}
             headerTitle={this.headerTitle()}
             rowSelection={rowSelection}
-            tableAlertOptionRender={this.tableAlertOptionRender}
-            toolBarRender={this.toolBarRender}
-            beforeSearchSubmit={this.beforeSearchSubmit}
-            form={this.form}
-            onReset={this.resetFn}
             expandable={expandable}
-            toolbar={this.toolbar}
-            tableExtraRender={this.tableExtraRender}
-            params={this.params}
-            onRequestError={this.onRequestError}
-            scroll={this.scroll}
+            actionRef={this.actionRef}
           />
-          {selectedRows?.length > 0 && (
-            <FooterToolbar
-              extra={
-                <div>
-                  已选择{' '}
-                  <a
-                    style={{
-                      fontWeight: 600,
-                    }}
-                  >
-                    {selectedRowKeys.length}
-                  </a>{' '}
-                  项&nbsp;&nbsp;
-                  <span>
-                    服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
-                  </span>
-                </div>
-              }
-            >
-              <Button
-                onClick={() => {
-                  this.handleBatchRemove(selectedRows);
-                  this.cleanSelectedRows();
-                  this.actionRef.current?.reloadAndRest?.();
-                }}
-              >
-                批量删除
-              </Button>
-              <Button type="primary">批量审批</Button>
-            </FooterToolbar>
-          )}
           <CreateForm
             onCancel={() => this.onAdd(false)}
             modalVisible={createModalVisible}
@@ -587,7 +607,7 @@ class ProTableCustom extends PureComponent {
               columns={this.getColumn()}
             />
           </CreateForm>
-
+          {this.footerToolbar()}
           {updateFormValues && Object.keys(updateFormValues).length ? (
             <UpdateForm
               onCancel={() => {
