@@ -92,18 +92,6 @@ const Login = (props) => {
                 },
               ]}
             />
-            <div style={{ marginBottom: '20px' }}>
-              <Checkbox checked={autoLogin} onChange={(e) => setAutoLogin(e.target.checked)}>
-                自动登录
-              </Checkbox>
-              <a
-                style={{
-                  float: 'right',
-                }}
-              >
-                忘记密码
-              </a>
-            </div>
           </TabPane>
           <TabPane tab="手机号登录" key="mobile">
             {status === 'error' && loginType === 'mobile' && !submitting && (
@@ -147,20 +135,20 @@ const Login = (props) => {
                 message.success('验证码发送成功!');
               }}
             />
-            <div style={{ marginBottom: '20px' }}>
-              <Checkbox checked={autoLogin} onChange={(e) => setAutoLogin(e.target.checked)}>
-                自动登录
-              </Checkbox>
-              <a
-                style={{
-                  float: 'right',
-                }}
-              >
-                忘记密码
-              </a>
-            </div>
           </TabPane>
         </Tabs>
+        <div style={{ marginBottom: '20px' }}>
+          <Checkbox checked={autoLogin} onChange={(e) => setAutoLogin(e.target.checked)}>
+            自动登录
+          </Checkbox>
+          <a
+            style={{
+              float: 'right',
+            }}
+          >
+            忘记密码
+          </a>
+        </div>
       </ProForm>
       <div className={styles.other}>
         其他登录方式

@@ -88,6 +88,31 @@ class Welcome extends ModalStepsFormCustom {
           </ProForm.Group>
         </StepsForm.StepForm>
         <StepsForm.StepForm name="time" title="发布实验">
+          <ProForm.Group>
+            <ProFormSelect
+              key="employees_num"
+              fieldKey="employees_num"
+              name="employees_num"
+              label="人数"
+              request={async () => [
+                { value: '1-3人', label: '1-3人' },
+                { value: '4-6人', label: '4-6人' },
+                { value: '7-10人', label: '7-10人' },
+              ]}
+            />
+
+            <ProFormSelect
+              key="production_process"
+              fieldKey="production_process"
+              name="production_process"
+              label="区域"
+              request={async () => [
+                { value: '全国', label: '全国' },
+                { value: '江苏', label: '江苏' },
+                { value: '浙江', label: '浙江' },
+              ]}
+            />
+          </ProForm.Group>
           <ProFormCheckbox.Group
             name="checkbox"
             label="部署单元"

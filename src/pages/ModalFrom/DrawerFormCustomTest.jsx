@@ -91,6 +91,19 @@ class DrawerFormCustomTest extends DrawerFormCustom {
             name="unusedMode"
             label="合同约定失效效方式"
           />
+          <ProFormSelect
+            name="select"
+            label="Select"
+            hasFeedback
+            request={async () => [
+              { label: '全部', value: 'all' },
+              { label: '未解决', value: 'open' },
+              { label: '已解决', value: 'closed' },
+              { label: '解决中', value: 'processing' },
+            ]}
+            placeholder="Please select a country"
+            rules={[{ required: true, message: 'Please select your country!' }]}
+          />
         </ProForm.Group>
         <ProForm.Group title="项目信息">
           <ProFormText width="s" name="id" label="主合同编号" />

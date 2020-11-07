@@ -1,23 +1,13 @@
 import { PureComponent, createRef } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  Button,
-  Tag,
-  Space,
-  Divider,
-  message,
-  Input,
-  Drawer,
-  Badge,
-  Card,
-  Descriptions,
-} from 'antd';
+import { Button, Badge, Space, BackTop, Tag, message, Input, Descriptions } from 'antd';
 import { LightFilter, ProFormDatePicker } from '@ant-design/pro-form';
-import { PageHeaderWrapper, PageContainer, FooterToolbar } from '@ant-design/pro-layout';
+import ProCard from '@ant-design/pro-card';
+import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm from './components/UpdateForm';
-import ProCard from '@ant-design/pro-card';
+
 class ProTableCustom extends PureComponent {
   actionRef = createRef();
   constructor(props) {
@@ -473,7 +463,7 @@ class ProTableCustom extends PureComponent {
   /**
    * 自定义logo
    */
-  pageHeaderLogo = () => null;
+  pageHeaderLogo = () => 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4';
 
   /**
    * 批量操作
@@ -513,6 +503,11 @@ class ProTableCustom extends PureComponent {
       )
     );
   };
+
+  /**
+   * 头部显示内容配置
+   */
+  pageHeaderContent = () => null;
 
   render() {
     const {
@@ -574,13 +569,10 @@ class ProTableCustom extends PureComponent {
 
     return (
       <>
-        <PageHeaderWrapper
+        <PageContainer
           title={pageName}
-          avatar={{
-            src: this.pageHeaderLogo()
-              ? ''
-              : 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
-          }}
+          avatar={{ src: this.pageHeaderLogo() }}
+          content={this.pageHeaderContent()}
         >
           {this.renderCustomFormContent()}
           <ProTable
@@ -628,7 +620,8 @@ class ProTableCustom extends PureComponent {
               />
             </UpdateForm>
           ) : null}
-        </PageHeaderWrapper>
+          <BackTop />
+        </PageContainer>
       </>
     );
   }

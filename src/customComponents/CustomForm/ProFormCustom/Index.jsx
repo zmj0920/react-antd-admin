@@ -1,23 +1,13 @@
 import React, { PureComponent, createRef } from 'react';
 import { message, BackTop, Button } from 'antd';
-import {
-  PageHeaderWrapper,
-  BasicLayout,
-  FooterToolbar,
-  PageContainer,
-} from '@ant-design/pro-layout';
-import ProForm, { ProFormText, ProFormDateRangePicker, ProFormSelect } from '@ant-design/pro-form';
+import { FooterToolbar, PageContainer } from '@ant-design/pro-layout';
+import ProForm from '@ant-design/pro-form';
 import styles from './index.less';
-import moment from 'moment';
 import ProCard from '@ant-design/pro-card';
-const waitTime = (time = 100) =>
-  new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
+
 class ProFormCustom extends PureComponent {
   formRef = createRef();
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -76,8 +66,6 @@ class ProFormCustom extends PureComponent {
    * @param {提交参数} values
    */
   onFinish = async (values) => {
-    await waitTime(2000);
-    console.log(values);
     message.success('提交成功！');
   };
 
@@ -86,18 +74,28 @@ class ProFormCustom extends PureComponent {
    */
   dateFormatter = 'string';
 
-  initialValues={}
+  /**
+   * 默认值配置
+   */
+  initialValues = {};
+
+  /**
+   * 头部显示内容配置
+   */
+  pageHeaderContent = () => null;
+
+  /**
+   * 表单底部扩展组件
+   */
+  renderOther = () => null;
 
   render() {
     const { pageName } = this.state;
     return (
-      <PageHeaderWrapper
+      <PageContainer
         title={pageName}
-        avatar={{
-          src: this.pageHeaderLogo()
-            ? ''
-            : 'https://avatars1.githubusercontent.com/u/8186664?s=460&v=4',
-        }}
+        avatar={{ src: this.pageHeaderLogo() }}
+        content={this.pageHeaderContent()}
       >
         <ProCard>
           <ProForm
@@ -109,9 +107,10 @@ class ProFormCustom extends PureComponent {
           >
             {this.formContent()}
           </ProForm>
+          {this.renderOther()}
         </ProCard>
         <BackTop />
-      </PageHeaderWrapper>
+      </PageContainer>
     );
   }
 }

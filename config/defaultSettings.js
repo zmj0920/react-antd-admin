@@ -1,8 +1,10 @@
 const proSettings = {
-  navTheme: 'dark',
+  // navTheme: 'dark',
+  navTheme: 'light',
+
   // 拂晓蓝
   primaryColor: '#1890ff',
-  layout: 'side',
+  layout: 'mix', //side
   contentWidth: 'Fluid',
   fixedHeader: true,
   fixSiderbar: true,
@@ -12,7 +14,8 @@ const proSettings = {
   },
   title: 'Ant Design Pro',
   pwa: false,
+  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
-  splitMenus: false
+  splitMenus: false,
 };
 export default proSettings;

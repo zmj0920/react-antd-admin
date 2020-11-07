@@ -217,4 +217,8 @@ export default {
   'GET  /api/login/captcha': getFakeCaptcha,
 
   'POST /api/test': getRule,
+  'GET /api/login/outLogin': (req, res) => {
+    access = '';
+    res.send({ data: {}, success: true });
+  },
 };
